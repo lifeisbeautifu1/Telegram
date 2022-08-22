@@ -11,9 +11,11 @@ import helmet from 'helmet';
 import rateLimiter from 'express-rate-limit';
 
 import errorHandler from './middleware/error';
+import auth from './middleware/auth';
 import notFound from './middleware/notFound';
 
 import authRouter from './routes/auth';
+import chatRouter from './routes/chat';
 
 const app = express();
 
@@ -35,8 +37,8 @@ app.use(
   })
 );
 
-
 app.use('/api/auth', authRouter);
+app.use('/api/chat', auth, chatRouter);
 
 app.use(errorHandler);
 app.use(notFound);
