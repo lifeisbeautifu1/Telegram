@@ -8,6 +8,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import rateLimiter from 'express-rate-limit';
 
 import errorHandler from './middleware/error';
 import notFound from './middleware/notFound';
@@ -16,11 +17,17 @@ import authRouter from './routes/auth';
 
 const app = express();
 
+app.set('trust proxy', 1);
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cookieParser());
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  })
+);
 app.use(
   cors({
     origin: true,
@@ -28,7 +35,6 @@ app.use(
   })
 );
 
-app.enable('trust proxy');
 
 app.use('/api/auth', authRouter);
 

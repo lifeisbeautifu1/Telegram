@@ -12,7 +12,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   const { username }: any = jwt.verify(token, process.env.JWT_SECRET as string);
 
   const user = (
-    await query('SELECT * FROM users WHERE username = $1 LIMIT 1;', [username])
+    await query(
+      'SELECT id, username, email, image_url FROM users WHERE username = $1 LIMIT 1;',
+      [username]
+    )
   ).rows[0];
 
   if (!user) throw new UnauthorizedError('Unauthenticated');
