@@ -52,7 +52,25 @@ export const accessChat = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json(chat);
 };
 export const fetchChats = async (req: Request, res: Response) => {
-  res.send('fetch chats');
+  
+  let chats = (
+    await query(
+      'SELECT id, chat_name, is_group_chat, group_admin, latest_message FROM chats INNER JOIN (SELECT * FROM chat_user WHERE user_id = $1) chat_user ON chats.id = chat_user.chat_id',
+      [res.locals.user.id]
+    )
+  ).rows;
+
+  for (const chat of chats) {
+    const users = (
+      await query(
+        'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+        [chat.id]
+      )
+    ).rows;
+    chat.users = users;
+  }
+
+  res.status(StatusCodes.OK).json(chats);
 };
 export const createGroupChat = async (req: Request, res: Response) => {
   res.send('create group chat');
