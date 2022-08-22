@@ -16,6 +16,8 @@ import notFound from './middleware/notFound';
 
 import authRouter from './routes/auth';
 import chatRouter from './routes/chat';
+import userRouter from './routes/user';
+import messageRouter from './routes/message';
 
 const app = express();
 
@@ -39,6 +41,8 @@ app.use(
 
 app.use('/api/auth', authRouter);
 app.use('/api/chat', auth, chatRouter);
+app.use('/api/user', auth, userRouter);
+app.use('/api/message', auth, messageRouter);
 
 app.use(errorHandler);
 app.use(notFound);
