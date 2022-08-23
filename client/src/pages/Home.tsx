@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
-import { FaTwitter, FaCaretDown } from 'react-icons/fa';
+import { FaTwitter, FaCaretDown, FaChevronRight } from 'react-icons/fa';
 import { AiFillAndroid, AiFillApple } from 'react-icons/ai';
 import { BsGlobe } from 'react-icons/bs';
 
@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div>
       <nav className="min-h-[48px] navbar absolute top-0 left-0 right-0  border-b border-gray-[#e8e8e8]">
-        <div className="container mx-auto px-4 flex items-center justify-between text-[#0088cc]">
+        <div className="container mx-auto flex items-center justify-between text-[#0088cc]">
           <ul className="flex items-center ">
             <li className="relative">
               <NavLink
@@ -151,6 +151,7 @@ const Home = () => {
           </ul>
         </div>
       </nav>
+
       <div className="container mx-auto mt-[70px] px-4">
         <div className="w-full relative">
           <div className="blog-wrap">
@@ -214,23 +215,53 @@ const Home = () => {
           <div></div>
         </div>
       </div>
-      <div className="main max-w-[1024px] flex flex-col sm:flex-row justify-center mx-auto my-0 text-center">
+      <div className="main max-w-[1024px] flex flex-col items-center  sm:flex-row sm:justify-center mx-auto my-0 text-center">
         <Link
           to="/andorid"
           className="flex items-center justify-center link link-android text-[#0088cc]"
         >
-          <AiFillAndroid className="inline w-[25px] h-[27px] mr-[10px]" />
-          Telegram for <b className="pl-1">Android</b>
+          <span className="flex items-center">
+            <AiFillAndroid className="inline w-[25px] h-[27px] mr-[10px]" />
+            Telegram for <b className="pl-1">Android</b>
+          </span>
           <div className="tl_main_download_image__android"></div>
         </Link>
         <Link
           to="/ios"
           className="flex items-center justify-center link link-ios text-[#0088cc]"
         >
-          <AiFillApple className="inline w-[25px] h-[27px] mr-[10px]" />
-          Telegram for <b className="pl-1">iPhone / iPad</b>
+          <span className="flex items-center">
+            <AiFillApple className="inline w-[25px] h-[27px] mr-[10px]" />
+            Telegram for <b className="pl-1">iPhone / iPad</b>
+          </span>
           <div className="tl_main_download_image__ios"></div>
         </Link>
+        <Link
+          to="/desktop"
+          className="flex items-center justify-center link link-desktop text-[#0088cc]"
+        >
+          Telegram for <b className="pl-1">Windows / Mac / Linux</b>
+        </Link>
+        <Link to="/" className="more-btn">
+          Browse more Telegram apps{' '}
+          <FaChevronRight className="text-xs flex items-center" />
+        </Link>
+      </div>
+      <div className="container mx-auto mt-5 mb-20">
+        <div className="h-[291px] overflow-y-hidden hidden md:block">
+          <div className="absolute right-0 left-0">
+            <div className="desktop">
+              <div className="w-[600px] mx-auto text-[#0088cc]">
+                <Link to="/" className="desktop-link desktop-link-td">
+                  Telegram for <b>PC / Linux</b>
+                </Link>
+                <Link to="/" className="desktop-link desktop-link-mac">
+                  Telegram for <b>macOS</b>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
