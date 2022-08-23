@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Lucida Grande';
+    font-size: 15px;
+}
+
+.navbar ul li a:after,
+.navbar ul li button:after {
+    display: block;
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    bottom: -1px;
+    background: #179cde;
+    height: 3px;
+    opacity: 0;
+    border-radius: 2px 2px 0 0;
+    content: '';
+    -webkit-transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    -ms-transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform-origin: bottom;
+    transform: scaleX(0.3) scaleY(0);
+}
+
+
+.navbar .active:after {
+    opacity: 1;
+    transform: scaleX(1) scaleY(1);
+}
+
+.navbar ul li a:hover:after,
+.navbar ul li button:hover:after {
+    opacity: 1;
+    transform: scaleX(1) scaleY(1);
+}
+
+.dropdown-menu {
+    width: 280px;
+    min-width: 280px;
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 14px;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    top: 100%;
+    z-index: 1000;
+    right: 0;
+    left: auto;
+    margin-top: 6px;
+    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 10%);
+    border-color: #e8e8e8;
+    transition: transform ease-in-out 0.15s, opacity ease-out 0.15s;
+    transform-origin: top right;
+    transform: scaleX(0.15) scaleY(0.15);
+    opacity: 0;
+}
+
+.dropdown-menu.active {
+    transform: scaleX(1) scaleY(1);
+    opacity: 1;
+}
+
+.dropdown-menu>li {
+    width: 125px;
+}
+
+.dropdown-menu li a {
+    padding: 9px 10px;
+    display: inline-block;
+    border-radius: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 15px;
+    margin: 0;
+}
+
+.dropdown-menu .chosen {
+    color: #444;
+}
+
+.dropdown-menu .long a {
+    font-size: 12px;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #e8f3fa;
+}
+
+.dropdown-menu .chosen a:hover {
+    background-color: transparent;
+}
+
+.dropdown-menu a:hover:after {
+    opacity: 0 !important;
+    transform: scaleX(1) scaleY(1);
+}
