@@ -24,6 +24,7 @@ body {
   -webkit-transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   -ms-transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   transform-origin: bottom;
   transform: scaleX(0.3) scaleY(0);
 }
@@ -237,7 +238,9 @@ body {
 
 .tl_main_download_image__android,
 .tl_main_download_image__ios,
-.tl_main_download_image__desktop {
+.tl_main_download_image__desktop,
+.video-android,
+.video-ios {
   display: block;
   position: absolute;
   top: 50%;
@@ -248,8 +251,30 @@ body {
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   -ms-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
   padding: 0;
   border: 0;
+}
+
+.video-android,
+.video-ios {
+  margin: -150px 0 0 -96px;
+  width: 192px;
+  height: 240px;
+}
+
+.video-ios {
+  margin: -150px 0 0 -152px;
+  width: 304px;
+  height: 240px;
+}
+
+@media (max-width: 640px) {
+  .video-ios {
+    margin: -124px 0 0 -121px;
+    width: 248px;
+    height: 198px;
+  }
 }
 
 .tl_main_download_image__android {
@@ -305,10 +330,11 @@ body {
 
 .desktop-link {
   text-align: center;
-  display: inline-block;
+  /* display: inline-block; */
   padding: 260px 0 15px;
   font-size: 15px;
   vertical-align: top;
+  transition: box-shadow 0.2s ease-in-out;
   -webkit-transition: box-shadow 0.2s ease-in-out;
   -moz-transition: box-shadow 0.2s ease-in-out;
   -ms-transition: box-shadow 0.2s ease-in-out;
@@ -318,9 +344,21 @@ body {
 
 .desktop-link-td {
   width: 52%;
-  padding-left:1.25rem;
+  padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
 .desktop-link-mac {
   width: 48%;
+}
+
+.news img {
+  transition: opacity 150ms ease-in-out;
+}
+
+.news:hover img {
+  opacity: 0.9;
+}
+
+.news:hover h1 {
+  text-decoration: underline;
 }

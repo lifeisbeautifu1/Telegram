@@ -4,6 +4,24 @@ import { FaTwitter, FaCaretDown, FaChevronRight } from 'react-icons/fa';
 import { AiFillAndroid, AiFillApple } from 'react-icons/ai';
 import { BsGlobe } from 'react-icons/bs';
 
+import { Article, Feature } from '../components';
+
+import image1 from '../assets/news1.jpeg';
+import image2 from '../assets/news2.jpeg';
+
+import android from '../assets/android-video.mp4';
+import ios from '../assets/ios-video.mp4';
+
+import simple from '../assets/simple.gif';
+import private1 from '../assets/private.gif';
+import synced from '../assets/synced.gif';
+import fast from '../assets/fast.gif';
+import powerful from '../assets/powerful.gif';
+import open from '../assets/open.gif';
+import secure from '../assets/secure.gif';
+import social from '../assets/social.gif';
+import expressive from '../assets/expressive.gif';
+
 const Home = () => {
   const [isDropDown, setIsDropDown] = useState(false);
   const [play, setPlay] = useState(true);
@@ -13,6 +31,8 @@ const Home = () => {
     setTimeout(() => setPlay(true), 1);
   };
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const androidRef = useRef<HTMLVideoElement>(null);
+  const iosRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const clickOutside = (e: MouseEvent) => {
@@ -151,7 +171,6 @@ const Home = () => {
           </ul>
         </div>
       </nav>
-
       <div className="container mx-auto mt-[70px] px-4">
         <div className="w-full relative">
           <div className="blog-wrap">
@@ -219,22 +238,48 @@ const Home = () => {
         <Link
           to="/andorid"
           className="flex items-center justify-center link link-android text-[#0088cc]"
+          onMouseOver={() => {
+            androidRef?.current?.play();
+          }}
+          onMouseLeave={() => {
+            setTimeout(() => {
+              androidRef?.current?.pause();
+            }, (androidRef?.current?.duration! - androidRef?.current?.currentTime!) * 1000);
+          }}
         >
+          <video className="video-android" muted loop ref={androidRef}>
+            <source src={android} type="video/mp4" />
+          </video>
           <span className="flex items-center">
             <AiFillAndroid className="inline w-[25px] h-[27px] mr-[10px]" />
             Telegram for <b className="pl-1">Android</b>
           </span>
-          <div className="tl_main_download_image__android"></div>
+          {/* <div className="tl_main_download_image__android"></div> */}
         </Link>
         <Link
           to="/ios"
           className="flex items-center justify-center link link-ios text-[#0088cc]"
+          onMouseOver={() => {
+            iosRef?.current?.play();
+          }}
+          onMouseLeave={() => {
+            setTimeout(() => {
+              iosRef?.current?.pause();
+            }, (iosRef?.current?.duration! - iosRef?.current?.currentTime!) * 1000);
+          }}
         >
+          <video
+            src={ios}
+            className="video-ios"
+            ref={iosRef}
+            muted
+            loop
+          ></video>
           <span className="flex items-center">
             <AiFillApple className="inline w-[25px] h-[27px] mr-[10px]" />
             Telegram for <b className="pl-1">iPhone / iPad</b>
           </span>
-          <div className="tl_main_download_image__ios"></div>
+          {/* <div className="tl_main_download_image__ios"></div> */}
         </Link>
         <Link
           to="/desktop"
@@ -247,7 +292,7 @@ const Home = () => {
           <FaChevronRight className="text-xs flex items-center" />
         </Link>
       </div>
-      <div className="container mx-auto mt-5 mb-20">
+      <div className="container mx-auto mt-5 mb-8">
         <div className="h-[291px] overflow-y-hidden hidden md:block">
           <div className="absolute right-0 left-0">
             <div className="desktop">
@@ -262,6 +307,79 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <Link
+          to="/"
+          className="mt-16 block mb-4 hover:underline text-center text-[#0088cc] font-medium text-[23px]"
+        >
+          Recent News
+        </Link>
+        <div className="flex flex-col max-w-[800px] mx-auto md:flex-row justify-center">
+          <Article
+            image={image1}
+            date={'Aug 12, 2022'}
+            title={`Telegram Emoji Platform, Custom Animated Emoji Packs, Gifting Telegram
+        Premium, and More`}
+            paragraph=" Today's update introduces the Telegram Emoji Platform, animated emoji in
+        messages and captions…"
+          />
+          <Article
+            image={image2}
+            date="Jun 21, 2022"
+            title={'700 Million Users and Telegram Premium'}
+            paragraph={`Telegram now has over 700 million monthly active users. Today we're launching Telegram Premium – a subscription that lets you support Telegram's continued development and gives access…`}
+          />
+        </div>
+      </div>
+      <h1 className="text-center text-[23px] text-[#222] font-medium">
+        Why Telegram?
+      </h1>
+      <div className="max-w-[950px] mx-auto mt-8 flex flex-wrap justify-center">
+        <Feature
+          image={simple}
+          title="Simple"
+          paragraph="is so simple you already know how to use it."
+        />
+        <Feature
+          image={private1}
+          title="Private"
+          paragraph="messages are heavily encrypted and can self-destruct."
+        />
+        <Feature
+          image={synced}
+          title="Synced"
+          paragraph="lets you access your chats from multiple devices."
+        />
+        <Feature
+          image={fast}
+          title="Fast"
+          paragraph="delivers messages faster than any other application."
+        />
+        <Feature
+          image={powerful}
+          title="Powerful"
+          paragraph="has no limits on the size of your media and chats."
+        />
+
+        <Feature
+          image={open}
+          title="Open"
+          paragraph="has an open API and source code free for everyone."
+        />
+        <Feature
+          image={secure}
+          title="Secure"
+          paragraph="keeps your messages safe from hacker attacks."
+        />
+        <Feature
+          image={social}
+          title="Social"
+          paragraph="groups can hold up to 200,000 members."
+        />
+        <Feature
+          image={expressive}
+          title="Expressive"
+          paragraph="lets you completely customize your messenger."
+        />
       </div>
     </div>
   );
