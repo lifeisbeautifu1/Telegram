@@ -41,8 +41,8 @@ export const login = async (req: Request, res: Response) => {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 1000 * 3600,
-    // sameSite: 'strict',
-    sameSite: 'none',
+    sameSite: 'strict',
+    // sameSite: 'none',
     path: '/',
   });
 
@@ -59,8 +59,8 @@ export const logout = async (req: Request, res: Response) => {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: +new Date(0),
-    // sameSite: 'strict',
-    sameSite: 'none',
+    sameSite: 'strict',
+    // sameSite: 'none',
     path: '/',
   });
   res.json({ message: 'Logout' });
@@ -109,8 +109,8 @@ export const register = async (req: Request, res: Response) => {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 1000 * 3600,
-    // sameSite: 'strict',
-    sameSite: 'none',
+    sameSite: 'strict',
+    // sameSite: 'none',
     path: '/',
   });
 

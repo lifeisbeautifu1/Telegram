@@ -15,6 +15,10 @@ module.exports = {
       colors: {
         primary: '#0088cc',
       },
+      fontFamily: {
+        primary: 'Roboto',
+        secondary: 'Lucida Grande',
+      },
     },
   },
   plugins: [],

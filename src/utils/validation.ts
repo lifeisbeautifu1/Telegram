@@ -19,6 +19,8 @@ export const validateRegisterInput = (
   }
   if (password.trim() === '') {
     errors.password = 'Password must not be empty';
+  } else if (password.length < 6) {
+    errors.password = 'Password must be at least 6 characters long';
   } else if (password !== confirmPassword) {
     errors.confirmPassword = 'Passwords do not match';
   }

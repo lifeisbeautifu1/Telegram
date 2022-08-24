@@ -46,8 +46,9 @@ const Home = () => {
     window.addEventListener('click', clickOutside);
     return () => window.removeEventListener('click', clickOutside);
   }, []);
+
   return (
-    <div>
+    <div className="font-secondary text-[15px]">
       <nav className="min-h-[48px] navbar absolute top-0 left-0 right-0  border-b border-gray-[#e8e8e8]">
         <div className="container mx-auto flex items-center justify-between text-[#0088cc]">
           <ul className="flex items-center ">
@@ -166,6 +167,14 @@ const Home = () => {
               >
                 <FaTwitter className="text-xl opacity-90 " />
                 Twitter
+              </Link>
+            </li>
+            <li className="relative">
+              <Link
+                to="/login"
+                className="flex gap-1 items-center  py-[15.5px] px-[15px] leading-[17px]"
+              >
+                Login
               </Link>
             </li>
           </ul>
