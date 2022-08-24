@@ -11,6 +11,11 @@ module.exports = {
         '2xl': '6rem',
       },
     },
+    extend: {
+      colors: {
+        primary: '#0088cc',
+      },
+    },
   },
   plugins: [],
 };

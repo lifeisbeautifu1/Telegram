@@ -381,6 +381,130 @@ const Home = () => {
           paragraph="lets you completely customize your messenger."
         />
       </div>
+      <footer className="max-w-[925px] mt-20 mx-auto border-t border-gray-200 lg:pt-[28px] lg:pb-[40px] py-4 px-[34px] flex justify-between text-[#333]">
+        <div className="hidden lg:flex w-2/5 flex-col gap-2 ">
+          <h1 className="font-bold text-sm">Telegram</h1>
+          <p className="text-xs">
+            Telegram is a cloud-based mobile and desktop messaging app with a
+            focus on security and speed.
+          </p>
+        </div>
+        <ul className="lg:hidden flex flex-row justify-center w-full text-xs gap-2">
+          <li>
+            <Link to="/" className="text-primary uppercase">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary uppercase">
+              Blogs
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary uppercase">
+              Apps
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary uppercase">
+              Platform
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary uppercase">
+              Twitter
+            </Link>
+          </li>
+        </ul>
+        <ul className="hidden lg:flex flex-col text-sm gap-1">
+          <li>
+            <Link to="/" className="block mb-2 font-bold hover:underline">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className=" text-primary hover:underline">
+              FAQ
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Blog
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Jobs
+            </Link>
+          </li>
+        </ul>
+        <ul className=" hidden lg:flex  flex-col text-sm gap-1">
+          <li>
+            <Link to="/" className="mb-2 block font-bold hover:underline">
+              Mobile Apps
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              iPhone/iPad
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Android
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Windows Phone
+            </Link>
+          </li>
+        </ul>
+        <ul className="hidden lg:flex flex-col text-sm gap-1">
+          <li>
+            <Link to="/" className="mb-2 block font-bold hover:underline">
+              Desktop Apps
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              PC/Mac/Linux
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              macOS
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Web-Browser
+            </Link>
+          </li>
+        </ul>
+        <ul className="hidden lg:flex flex-col text-sm gap-1">
+          <li>
+            <Link to="/" className="mb-2 block font-bold hover:underline">
+              Platform
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              API
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Translations
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-primary hover:underline">
+              Instant View
+            </Link>
+          </li>
+        </ul>
+      </footer>
     </div>
   );
 };
