@@ -60,36 +60,36 @@ const Home = () => {
               </NavLink>
             </li>
             <li className="relative">
-              <NavLink
-                to="/faq"
+              <Link
+                to="/"
                 className="block  py-[15.5px] px-[15px] leading-[17px]"
               >
                 FAQ
-              </NavLink>
+              </Link>
             </li>
             <li className="relative">
-              <NavLink
-                to="/apps"
+              <Link
+                to="/"
                 className="block py-[15.5px] px-[15px] leading-[17px]"
               >
                 Apps
-              </NavLink>
+              </Link>
             </li>
             <li className="relative hidden md:block">
-              <NavLink
-                to="/api"
+              <Link
+                to="/"
                 className="block  py-[15.5px] px-[15px] leading-[17px]"
               >
                 API
-              </NavLink>
+              </Link>
             </li>
             <li className="relative hidden md:block">
-              <NavLink
-                to="/protocol"
+              <Link
+                to="/"
                 className="block  py-[15.5px] px-[15px] leading-[17px]"
               >
                 Protocol
-              </NavLink>
+              </Link>
             </li>
           </ul>
           <ul className="flex items-center">
@@ -160,13 +160,13 @@ const Home = () => {
               </ul>
             </li>
             <li className="relative hidden md:block">
-              <NavLink
-                to="/twitter"
+              <Link
+                to="/"
                 className="flex gap-1 items-center  py-[15.5px] px-[15px] leading-[17px]"
               >
                 <FaTwitter className="text-xl opacity-90 " />
                 Twitter
-              </NavLink>
+              </Link>
             </li>
           </ul>
         </div>
@@ -182,30 +182,30 @@ const Home = () => {
                 Recent News
               </Link>
               <div className="side_blog_entries">
-                <a href="/blog/custom-emoji" className="mt-3 block">
+                <Link to="/" className="mt-3 block">
                   <div className="text-[#444] text-[14px] lg:text-[12px] lg:text-black  font-bold">
                     Aug 12
                   </div>
                   <div className="cursor-pointer text-[#0088cc] hover:underline text-[14px] lg:text-[12px]">
                     Custom Animated Emoji, Gifting Telegram Premium, and More
                   </div>
-                </a>
-                <a href="/blog/700-million-and-premium" className="mt-3 block">
+                </Link>
+                <Link to="/" className="mt-3 block">
                   <div className="text-[#444] text-[14px] lg:text-[12px] lg:text-black  font-bold">
                     Jun 21
                   </div>
                   <div className="cursor-pointer text-[#0088cc] hover:underline text-[14px] lg:text-[12px]">
                     700 Million Users and Telegram Premium
                   </div>
-                </a>
-                <a href="/blog/notifications-bots" className="mt-3 block">
+                </Link>
+                <Link to="/" className="mt-3 block">
                   <div className="text-[#444] text-[14px] lg:text-[12px] lg:text-black font-bold">
                     Apr 16
                   </div>
                   <div className="cursor-pointer text-[#0088cc] hover:underline text-[14px] lg:text-[12px]">
                     Notification Sounds, Bot Revolution and More
                   </div>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@ const Home = () => {
       </div>
       <div className="main max-w-[1024px] flex flex-col items-center  sm:flex-row sm:justify-center mx-auto my-0 text-center">
         <Link
-          to="/andorid"
+          to="/"
           className="flex items-center justify-center link link-android text-[#0088cc]"
           onMouseOver={() => {
             androidRef?.current?.play();
@@ -257,7 +257,7 @@ const Home = () => {
           {/* <div className="tl_main_download_image__android"></div> */}
         </Link>
         <Link
-          to="/ios"
+          to="/"
           className="flex items-center justify-center link link-ios text-[#0088cc]"
           onMouseOver={() => {
             iosRef?.current?.play();
@@ -282,7 +282,7 @@ const Home = () => {
           {/* <div className="tl_main_download_image__ios"></div> */}
         </Link>
         <Link
-          to="/desktop"
+          to="/"
           className="flex items-center justify-center link link-desktop text-[#0088cc]"
         >
           Telegram for <b className="pl-1">Windows / Mac / Linux</b>
