@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 import { register } from '../features/auth/auth';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { createRipple } from '../utils/createRipple';
 
 const initialFormState = {
   username: '',
@@ -21,11 +22,11 @@ const Register = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (user) navigate('/messanger');
   }, [user, navigate]);
-
-  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -214,7 +215,8 @@ const Register = () => {
 
         <button
           type="submit"
-          className="w-full py-2 mb-4 font-medium text-white uppercase transition duration-200 bg-[#3390ec] border border-[#3390ec] rounded shadow-md hover:bg-blue-500/90"
+          onClick={createRipple}
+          className="relative overflow-hidden w-full py-2 mb-4 font-medium text-white uppercase transition duration-200 bg-[#3390ec] border border-[#3390ec] rounded shadow-md hover:bg-blue-500/90"
         >
           Sign Up
         </button>

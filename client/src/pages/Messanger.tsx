@@ -1,18 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
-import { logout } from '../features/auth/auth';
 import { useAppDispatch } from '../app/hooks';
+import { fetchChats } from '../features/chat/chat';
 
 const Messanger = () => {
   const dispatch = useAppDispatch();
-  return (
-    <div>
-      Messanger
-      <Link to="/login">Login</Link>
-      <Link to="/register">Sign Up</Link>
-      <button onClick={() => dispatch(logout())}>logout</button>
-    </div>
-  );
+
+  useEffect(() => {
+    dispatch(fetchChats());
+  }, [dispatch]);
+
+  return <div>Messanger</div>;
 };
 
 export default Messanger;

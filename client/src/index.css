@@ -361,3 +361,18 @@
 .news:hover h1 {
   text-decoration: underline;
 }
+
+span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 1s linear;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

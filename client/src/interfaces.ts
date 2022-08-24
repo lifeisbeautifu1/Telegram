@@ -18,3 +18,20 @@ export interface IFormData {
   password?: string;
   confirmPassword?: string;
 }
+
+export interface IChat {
+  id: string;
+  chat_name: string;
+  group_admin: IUser;
+  is_group_chat: boolean;
+  latest_message: IMessage;
+  users: IUser[];
+}
+
+export interface IMessage {
+  id: string;
+  chat: IChat;
+  content: string;
+  sender: IUser;
+  createdAt: string;
+}
