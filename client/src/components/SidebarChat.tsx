@@ -20,6 +20,8 @@ interface SidebarChatProps {
 
 const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
   const { user } = useAppSelector((state) => state.auth);
+
+  const { onlineUsers } = useAppSelector((state) => state.chat);
   const dispatch = useAppDispatch();
   const sender = getSenderFull(user!, chat.users);
   // const image = chat.is_group_chat ? '' : sender.image_url;
@@ -41,10 +43,15 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
           //   src={sender.image_url}
           //   alt={''}
           // />
-          <Avatar letter={sender.username[0]} />
+          <>
+            <Avatar letter={sender.username[0]} />
+            {onlineUsers.map((user) => user.userId).includes(sender.id) && (
+              <span className="top-0 left-8 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+            )}
+          </>
         )}
-        {/* <span className="top-0 left-8 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span> */}
       </div>
+
       <div className="overflow-hidden w-full py-[2px]">
         <h1 className="text-xs capitalize font-medium flex  justify-between items-center">
           {chatName}{' '}

@@ -21,6 +21,8 @@ import chatRouter from './routes/chat';
 import userRouter from './routes/user';
 import messageRouter from './routes/message';
 
+import { users, addUser, getUser, removeUser } from './utils/users';
+
 const app = express();
 
 app.set('trust proxy', 1);
@@ -68,6 +70,17 @@ const start = async () => {
         socket.join(id);
       });
 
+      socket.on('addUser', (userId) => {
+        addUser(userId, socket.id);
+        io.emit('getUsers', users);
+      });
+
+      socket.on('disconnect', () => {
+        console.log('User disconnected'.red.bold);
+        removeUser(socket.id);
+        io.emit('getUsers', users);
+      });
+
       socket.on('joinChat', (room) => {
         socket.join(room);
         console.log(`User joined room ${room}`.blue.bold);
@@ -75,7 +88,7 @@ const start = async () => {
 
       socket.on('sendMessage', (newMessageReceived) => {
         const chat = newMessageReceived.chat;
-        console.log('new message!');
+
         if (!chat.users) return;
 
         chat.users.forEach((user: any) => {

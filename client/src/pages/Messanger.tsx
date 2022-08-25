@@ -2,7 +2,11 @@ import { useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchChats, toggleRefetch } from '../features/chat/chat';
+import {
+  fetchChats,
+  toggleRefetch,
+  setOnlineUsers,
+} from '../features/chat/chat';
 import { Sidebar, Chat } from '../components';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
@@ -23,6 +27,12 @@ const Messanger = () => {
       socket.current = io('http://localhost:5000');
 
       socket.current.emit('setup', user.id);
+
+      socket.current?.emit('addUser', user.id);
+
+      socket.current?.on('getUsers', (users) => {
+        dispatch(setOnlineUsers(users));
+      });
 
       socket.current.on('messageReceived', () => {
         dispatch(toggleRefetch());

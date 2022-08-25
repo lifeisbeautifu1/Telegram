@@ -36,13 +36,21 @@ export interface IMessage {
   created_at: string;
 }
 
+export interface IOnlineUser {
+  userId: string;
+  socketId: string;
+}
 
 export interface ServerToClientEvents {
   messageReceived: (message: any) => void;
+
+  getUsers: (users: IOnlineUser[]) => void;
 }
 
 export interface ClientToServerEvents {
   setup: (id: string) => void;
   joinChat: (id: string) => void;
   sendMessage: (message: any) => void;
+
+  addUser: (userId: string) => void;
 }
