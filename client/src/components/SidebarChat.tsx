@@ -26,6 +26,7 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
   const sender = getSenderFull(user!, chat.users);
   // const image = chat.is_group_chat ? '' : sender.image_url;
   const chatName = chat.is_group_chat ? chat.chat_name : sender.username;
+  
   return (
     <div
       className="w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50"

@@ -4,4 +4,5 @@ export { default as Chat } from './Chat';
 export { default as Sidebar } from './Sidebar';
 export { default as Avatar } from './Avatar';
 export { default as Message } from './Message';
+export { default as SidebarChat } from './SidebarChat';
 export { default as ProtectedRoute } from './ProtectedRoute';

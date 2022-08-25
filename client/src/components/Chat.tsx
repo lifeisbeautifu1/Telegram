@@ -3,7 +3,7 @@ import { Socket } from 'socket.io-client';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchMessages, sendMessage } from '../features/chat/chat';
-import { getSenderFull } from '../utils/chat';
+import { getSenderFull, isNewMessage } from '../utils/chat';
 import { Message, Avatar } from './';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
@@ -17,9 +17,11 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ socket }) => {
   const dispatch = useAppDispatch();
 
-  const { selectedChat: chat, messages, refetch } = useAppSelector(
-    (state) => state.chat
-  );
+  const {
+    selectedChat: chat,
+    messages,
+    refetch,
+  } = useAppSelector((state) => state.chat);
 
   const { user } = useAppSelector((state) => state.auth);
 
@@ -128,10 +130,16 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               </svg>
             </div>
           </div>
-          <div className="w-full h-full flex flex-col-reverse px-4 pb-4">
+          <div className="w-full h-full flex flex-col-reverse px-4 pb-4 overflow-y-scroll">
             {messages &&
-              messages.map((m) => {
-                return <Message key={m.id} message={m} />;
+              messages.map((m, index) => {
+                return (
+                  <Message
+                    isNewMessage={isNewMessage(messages, m, index)}
+                    key={m.id}
+                    message={m}
+                  />
+                );
               })}
           </div>
           <form
