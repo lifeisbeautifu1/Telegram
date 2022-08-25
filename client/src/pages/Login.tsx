@@ -14,6 +14,8 @@ const initialFormState = {
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const [remember, setRemember] = useState(false);
+
   const [formState, setFormState] = useState(initialFormState);
 
   const { errors, user } = useAppSelector((state) => state.auth);
@@ -147,11 +149,29 @@ const Login = () => {
             </p>
           )}
         </div>
+
         <div
-          onClick={createRipple}
-          className="relative overflow-hidden w-full py-3 mb-4 text-gray-600  transition duration-200 bg-white cursor-pointer hover:bg-gray-100  rounded text-center"
+          onClick={(e) => {
+            createRipple(e);
+            setRemember(!remember);
+          }}
+          className="relative overflow-hidden w-full py-4 mb-4 text-gray-600  transition duration-200 bg-white cursor-pointer hover:bg-gray-100  rounded text-center flex items-center"
         >
-          Keep me sign in
+          <div className="flex items-center h-5 ml-4">
+            <input
+              id="remember"
+              type="checkbox"
+              checked={remember}
+              onChange={() => {}}
+              className="w-4 h-4 bg-gray-50 rounded border border-gray-100 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+            />
+          </div>
+          <label
+            htmlFor="remember"
+            className="ml-8 cursor-pointer block  text-gray-600 dark:text-gray-300"
+          >
+            Keep me sign in
+          </label>
         </div>
         <button
           type="submit"

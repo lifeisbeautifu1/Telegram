@@ -33,5 +33,5 @@ export interface IMessage {
   chat: IChat;
   content: string;
   sender: IUser;
-  createdAt: string;
+  created_at: string;
 }
