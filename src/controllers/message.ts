@@ -43,7 +43,10 @@ export const sendMessage = async (req: Request, res: Response) => {
 export const getAllMessages = async (req: Request, res: Response) => {
   const { chatId } = req.params;
   const messages = (
-    await query('SELECT * FROM messages WHERE chat = $1;', [chatId])
+    await query(
+      'SELECT * FROM messages WHERE chat = $1 ORDER BY created_at DESC;',
+      [chatId]
+    )
   ).rows;
   for (const message of messages) {
     const sender = (

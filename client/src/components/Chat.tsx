@@ -1,17 +1,33 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { fetchMessages } from '../features/chat/chat';
+import { fetchMessages, sendMessage } from '../features/chat/chat';
 import { getSenderFull } from '../utils/chat';
+import { Message, Avatar } from './';
 
 const Chat = () => {
   const dispatch = useAppDispatch();
 
-  const { selectedChat: chat } = useAppSelector((state) => state.chat);
+  const { selectedChat: chat, messages } = useAppSelector(
+    (state) => state.chat
+  );
 
   const { user } = useAppSelector((state) => state.auth);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [content, setContent] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(
+      sendMessage({
+        chatId: chat?.id!,
+        content,
+      })
+    );
+    setContent('');
+  };
 
   useEffect(() => {
     if (chat) {
@@ -19,9 +35,6 @@ const Chat = () => {
       inputRef?.current?.focus();
     }
   }, [chat, dispatch]);
-
-  const sender = getSenderFull(user!, chat?.users!);
-  const chatName = chat?.is_group_chat ? chat?.chat_name : sender.username;
 
   return (
     <div
@@ -37,13 +50,19 @@ const Chat = () => {
       {chat && (
         <div className="h-full flex flex-col">
           <div className="py-2 px-4 flex items-center gap-2 border-b border-gray-200">
-            <div className="inline-flex overflow-hidden relative justify-center items-center w-8 h-8 bg-gray-100 rounded-full dark:bg-gray-600">
-              <span className="font-medium text-gray-600 capitalize dark:text-gray-300">
-                {chatName[0]}
-              </span>
-            </div>
+            <Avatar
+              letter={
+                chat && chat?.is_group_chat
+                  ? chat?.chat_name[0]
+                  : getSenderFull(user!, chat?.users).username[0]
+              }
+            />
             <div className="flex flex-col justify-center">
-              <h1 className="text-xs text-medium capitalize">{chatName}</h1>
+              <h1 className="text-xs text-medium capitalize">
+                {chat && chat?.is_group_chat
+                  ? chat?.chat_name
+                  : getSenderFull(user!, chat?.users).username}
+              </h1>
               <p className="text-[10px] text-gray-400">
                 {chat?.is_group_chat
                   ? `${chat?.users?.length} members`
@@ -95,7 +114,16 @@ const Chat = () => {
               </svg>
             </div>
           </div>
-          <div className="mt-auto flex items-center gap-4 py-3 px-4 border-t border-gray-200">
+          <div className="w-full h-full flex flex-col-reverse px-4 pb-4">
+            {messages &&
+              messages.map((m) => {
+                return <Message key={m.id} message={m} />;
+              })}
+          </div>
+          <form
+            className="mt-auto flex items-center gap-4 py-3 px-4 border-t border-gray-200"
+            onSubmit={handleSubmit}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -112,9 +140,11 @@ const Chat = () => {
             </svg>
             <input
               type="text"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               ref={inputRef}
               placeholder="Write a message"
-              className="rounded  px-2  placeholder:text-gray-300 w-full outline-none"
+              className="rounded text-gray-700  px-2  placeholder:text-gray-300 w-full outline-none"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +174,7 @@ const Chat = () => {
                 d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
               />
             </svg>
-          </div>
+          </form>
         </div>
       )}
     </div>

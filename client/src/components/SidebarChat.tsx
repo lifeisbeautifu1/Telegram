@@ -3,6 +3,7 @@ import { getSenderFull } from '../utils/chat';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { setSelectedChat } from '../features/chat/chat';
 import { formatDistanceToNow } from 'date-fns';
+import { Avatar } from './';
 
 interface SidebarChatProps {
   chat: IChat;
@@ -21,22 +22,14 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat }) => {
     >
       <div className="relative">
         {chat.is_group_chat ? (
-          <div className="inline-flex overflow-hidden relative justify-center items-center w-11 h-11 capitalize bg-gray-100 rounded-full dark:bg-gray-600">
-            <span className="font-medium text-gray-600 dark:text-gray-300">
-              {chatName[0]}
-            </span>
-          </div>
+          <Avatar letter={chatName[0]} />
         ) : (
           // <img
           //   className="w-10 h-10 rounded-full"
           //   src={sender.image_url}
           //   alt={''}
           // />
-          <div className="inline-flex overflow-hidden relative justify-center items-center w-11 h-11 capitalize bg-gray-100 rounded-full dark:bg-gray-600">
-            <span className="font-medium text-gray-600 dark:text-gray-300">
-              {sender.username[0]}
-            </span>
-          </div>
+          <Avatar letter={sender.username[0]} />
         )}
         {/* <span className="top-0 left-8 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span> */}
       </div>

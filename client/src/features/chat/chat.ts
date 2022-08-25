@@ -43,6 +43,22 @@ export const fetchMessages = createAsyncThunk(
   }
 );
 
+export const sendMessage = createAsyncThunk(
+  'auth/sendMessage',
+  async (action: { content: string; chatId: string }, thunkAPI) => {
+    try {
+      const { data } = await axios.post('/message', {
+        content: action.content,
+        chatId: action.chatId,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue('error');
+    }
+  }
+);
+
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -65,8 +81,7 @@ export const chatSlice = createSlice({
       })
       .addCase(fetchChats.rejected, (state) => {
         state.loading = false;
-      });
-    builder
+      })
       .addCase(fetchMessages.pending, (state) => {
         state.loading = true;
       })
@@ -78,6 +93,27 @@ export const chatSlice = createSlice({
         }
       )
       .addCase(fetchMessages.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(sendMessage.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        sendMessage.fulfilled,
+        (state, action: PayloadAction<IMessage>) => {
+          state.messages.unshift(action.payload);
+          state.chats = state.chats.map((chat) => {
+            return chat.id === action.payload.chat.id
+              ? {
+                  ...chat,
+                  latest_message: action.payload,
+                }
+              : chat;
+          });
+          state.loading = false;
+        }
+      )
+      .addCase(sendMessage.rejected, (state) => {
         state.loading = false;
       });
   },
