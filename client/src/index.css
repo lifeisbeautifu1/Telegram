@@ -391,3 +391,22 @@ span.ripple {
 }
 
 
+
+.messanger a.active {
+  color: rgb(56, 189, 248);
+}
+
+.messanger a {
+  color: rgb(156, 163, 175);
+}
+
+.messanger a.active:hover {
+  color: rgb(14, 165, 233);
+}
+
+.messanger a:hover {
+  color: rgb(107, 114, 128);
+}
+
+
+

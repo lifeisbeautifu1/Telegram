@@ -1,11 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { Socket, io } from 'socket.io-client';
 import axios from 'axios';
 
-import { ProtectedRoute } from './components';
-import { Home, Login, Register, Messanger } from './pages';
-import { useAppDispatch } from './app/hooks';
+import {
+  ProtectedRoute,
+  Chat,
+  MessangerLayout,
+  Sidebar,
+  SidebarContacts,
+  SidebarSettings,
+} from './components';
+import { Home, Login, Register } from './pages';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { ServerToClientEvents, ClientToServerEvents } from './interfaces';
 import { init } from './features/auth/auth';
+import { setOnlineUsers, toggleRefetch } from './features/chat/chat';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
@@ -17,6 +27,31 @@ const App = () => {
     dispatch(init());
   }, [dispatch]);
 
+  const { user } = useAppSelector((state) => state.auth);
+
+  const socket = useRef<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      socket.current = io('http://localhost:5000');
+
+      socket.current.emit('setup', user.id);
+
+      socket.current.emit('addUser', user.id);
+
+      socket.current.on('getUsers', (users) => {
+        dispatch(setOnlineUsers(users));
+      });
+
+      socket.current.on('messageReceived', () => {
+        dispatch(toggleRefetch());
+      });
+    }
+  }, [user, dispatch]);
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -26,10 +61,38 @@ const App = () => {
         path="/messanger"
         element={
           <ProtectedRoute>
-            <Messanger />
+            <MessangerLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route
+          index
+          element={
+            <>
+              <Sidebar socket={socket} />
+              <Chat socket={socket} />
+            </>
+          }
+        />
+        <Route
+          path="/messanger/contacts"
+          element={
+            <>
+              <SidebarContacts />
+              <Chat socket={socket} />
+            </>
+          }
+        />
+        <Route
+          path="/messanger/settings"
+          element={
+            <>
+              <SidebarSettings />
+              <div className="w-full">Settings here</div>
+            </>
+          }
+        />
+      </Route>
     </Routes>
   );
 };

@@ -19,7 +19,7 @@ const Message: React.FC<MessageProps> = ({ message, isNewMessage }) => {
             <h1 className="text-sky-400 text-medium text-sm capitalize">
               {message?.sender?.username}
             </h1>
-            <span className="text-gray-400 text-xs">
+            <span className="text-gray-400 text-xs select-none">
               {hours >= 10 ? hours : `0${hours}`}:
               {minutes >= 10 ? minutes : `0${minutes}`}
             </span>
@@ -33,7 +33,7 @@ const Message: React.FC<MessageProps> = ({ message, isNewMessage }) => {
       <div className="w-full pb-1 text-gray-700 flex gap-2">
         <div className="ml-[50px] w-full h-full flex">
           <p className="text-xs w-full pr-2">{message.content}</p>
-          <p className="ml-auto text-gray-400 text-xs">
+          <p className="ml-auto text-gray-400 text-xs select-none">
             {hours >= 10 ? hours : `0${hours}`}:
             {minutes >= 10 ? minutes : `0${minutes}`}
           </p>

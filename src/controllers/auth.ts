@@ -34,7 +34,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(StatusCodes.BAD_REQUEST).json({ errors });
 
   const token = jwt.sign({ username }, process.env.JWT_SECRET as string, {
-    expiresIn: '1h',
+    expiresIn: '7d',
   });
 
   res.cookie('token', token, {
@@ -102,7 +102,7 @@ export const register = async (req: Request, res: Response) => {
   );
 
   const token = jwt.sign({ username }, process.env.JWT_SECRET as string, {
-    expiresIn: '1h',
+    expiresIn: '7d',
   });
 
   res.cookie('token', token, {

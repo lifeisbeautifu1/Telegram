@@ -22,6 +22,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
     selectedChat: chat,
     messages,
     refetch,
+    onlineUsers,
   } = useAppSelector((state) => state.chat);
 
   const { user } = useAppSelector((state) => state.auth);
@@ -101,11 +102,29 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
                   ? chat?.chat_name
                   : getSenderFull(user!, chat?.users).username}
               </h1>
-              <p className="text-[10px] text-gray-400">
-                {chat?.is_group_chat
-                  ? `${chat?.users?.length} members`
-                  : 'last seen 38 minutes ago'}
-              </p>
+              {chat?.is_group_chat ? (
+                <div className="flex items-center">
+                  <p className="text-xs text-gray-400">
+                    {chat?.users?.length} members
+                  </p>
+                  <p className="ml-1 text-xs text-sky-400">
+                    {
+                      chat?.users?.filter((user) =>
+                        onlineUsers.map((u) => u.userId).includes(user.id)
+                      ).length
+                    }{' '}
+                    online
+                  </p>
+                </div>
+              ) : onlineUsers
+                  .map((user) => user.userId)
+                  .includes(getSenderFull(user!, chat?.users).id) ? (
+                <p className="text-xs text-sky-400">online</p>
+              ) : (
+                <p className="text-xs text-gray-400">
+                  last seen 38 minutes ago
+                </p>
+              )}
             </div>
             <div className="flex items-center gap-6 ml-auto">
               <svg

@@ -212,11 +212,10 @@ const Register = () => {
             </p>
           )}
         </div>
-
         <button
           type="submit"
           onClick={createRipple}
-          className="relative overflow-hidden w-full py-2 mb-4 font-medium text-white uppercase transition duration-200 bg-[#3390ec] border border-[#3390ec] rounded shadow-md hover:bg-blue-500/90"
+          className="relative overflow-hidden w-full py-2 mb-4 font-medium text-white uppercase transition duration-200 bg-[#3390ec] rounded shadow-md hover:bg-blue-500/90"
         >
           Sign Up
         </button>

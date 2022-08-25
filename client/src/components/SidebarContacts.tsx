@@ -1,60 +1,9 @@
 import { AiOutlineSearch } from 'react-icons/ai';
 import { IoCreateOutline } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
 
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
-import { fetchChats } from '../features/chat/chat';
-import { SidebarChat } from './';
-import { getSenderFull } from '../utils/chat';
-
-interface SidebarProps {
-  socket: React.MutableRefObject<Socket<
-    ServerToClientEvents,
-    ClientToServerEvents
-  > | null>;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
-  const dispatch = useAppDispatch();
-
-  const { refetch } = useAppSelector((state) => state.chat);
-
-  useEffect(() => {
-    dispatch(fetchChats());
-  }, [dispatch, refetch]);
-
+const SidebarContacts = () => {
   const { pathname } = useLocation();
-
-  const [filter, setFilter] = useState('');
-
-  const { chats } = useAppSelector((state) => state.chat);
-
-  const { user } = useAppSelector((state) => state.auth);
-
-  const [filteredChats, setFilteredChats] = useState(chats);
-
-  useEffect(() => {
-    setFilteredChats(chats);
-  }, [chats]);
-
-  useEffect(() => {
-    if (!filter) {
-      setFilteredChats(chats);
-    } else {
-      setFilteredChats(
-        chats.filter((chat) => {
-          const sender = getSenderFull(user!, chat?.users);
-          const chatName = chat?.is_group_chat
-            ? chat?.chat_name
-            : sender?.username;
-          return chatName?.toLowerCase()?.includes(filter.toLowerCase());
-        })
-      );
-    }
-  }, [filter, chats, user]);
 
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
@@ -63,19 +12,11 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
           <AiOutlineSearch className="text-gray-600" />
           <input
             type="text"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            placeholder="Search"
+            placeholder="Search users"
             className="bg-transparent w-full h-full outline-none text-sm"
           />
         </div>
         <IoCreateOutline className="w-7 h-7 cursor-pointer text-sky-400" />
-      </div>
-      <div className=" h-full flex flex-col">
-        {filteredChats &&
-          filteredChats.map((chat) => (
-            <SidebarChat socket={socket} key={chat.id} chat={chat} />
-          ))}
       </div>
 
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">
@@ -147,4 +88,4 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
   );
 };
 
-export default Sidebar;
+export default SidebarContacts;
