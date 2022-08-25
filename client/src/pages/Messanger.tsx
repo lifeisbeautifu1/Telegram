@@ -1,15 +1,38 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { io, Socket } from 'socket.io-client';
 
-import { useAppDispatch } from '../app/hooks';
-import { fetchChats } from '../features/chat/chat';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetchChats, toggleRefetch } from '../features/chat/chat';
 import { Sidebar, Chat } from '../components';
+import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
 const Messanger = () => {
   const dispatch = useAppDispatch();
 
+  const { user } = useAppSelector((state) => state.auth);
+
+  const { refetch } = useAppSelector((state) => state.chat);
+
+  const socket = useRef<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      socket.current = io('http://localhost:5000');
+
+      socket.current.emit('setup', user.id);
+
+      socket.current.on('messageReceived', () => {
+        dispatch(toggleRefetch());
+      });
+    }
+  }, [user, dispatch]);
+
   useEffect(() => {
     dispatch(fetchChats());
-  }, [dispatch]);
+  }, [dispatch, refetch]);
 
   return (
     <div className="h-screen w-screen  flex justify-center items-center px-4">
@@ -23,8 +46,8 @@ const Messanger = () => {
           </h1>
         </div>
         <div className="flex app">
-          <Sidebar />
-          <Chat />
+          <Sidebar socket={socket} />
+          <Chat socket={socket} />
         </div>
       </div>
     </div>

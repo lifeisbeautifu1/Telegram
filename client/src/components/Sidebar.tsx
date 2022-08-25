@@ -1,10 +1,19 @@
 import { AiOutlineSearch } from 'react-icons/ai';
 import { IoCreateOutline } from 'react-icons/io5';
+import { Socket } from 'socket.io-client';
 
 import { useAppSelector } from '../app/hooks';
+import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 import SidebarChat from './SidebarChat';
 
-const Sidebar = () => {
+interface SidebarProps {
+  socket: React.MutableRefObject<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
   const { chats } = useAppSelector((state) => state.chat);
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
@@ -21,7 +30,9 @@ const Sidebar = () => {
       </div>
       <div className=" h-full flex flex-col">
         {chats &&
-          chats.map((chat) => <SidebarChat key={chat.id} chat={chat} />)}
+          chats.map((chat) => (
+            <SidebarChat socket={socket} key={chat.id} chat={chat} />
+          ))}
       </div>
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">
         <svg

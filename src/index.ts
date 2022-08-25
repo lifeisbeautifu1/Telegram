@@ -4,6 +4,8 @@ import 'express-async-errors';
 import 'dotenv/config';
 import 'colors';
 
+import { Server } from 'socket.io';
+
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
@@ -51,9 +53,37 @@ const PORT = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    app.listen(PORT, () =>
+    const server = app.listen(PORT, () =>
       console.log(`Server is running on port ${PORT}`.green.bold)
     );
+    const io = new Server(server, {
+      cors: {
+        origin: '*',
+      },
+    });
+    io.on('connection', (socket) => {
+      console.log('User connected'.green.bold);
+
+      socket.on('setup', (id) => {
+        socket.join(id);
+      });
+
+      socket.on('joinChat', (room) => {
+        socket.join(room);
+        console.log(`User joined room ${room}`.blue.bold);
+      });
+
+      socket.on('sendMessage', (newMessageReceived) => {
+        const chat = newMessageReceived.chat;
+        console.log('new message!');
+        if (!chat.users) return;
+
+        chat.users.forEach((user: any) => {
+          if (user.id === newMessageReceived.sender.id) return;
+          socket.in(user.id).emit('messageReceived', newMessageReceived);
+        });
+      });
+    });
   } catch (error) {
     console.log(error);
   }

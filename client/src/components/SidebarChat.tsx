@@ -1,15 +1,24 @@
-import { IChat } from '../interfaces';
+import {
+  IChat,
+  ServerToClientEvents,
+  ClientToServerEvents,
+} from '../interfaces';
 import { getSenderFull } from '../utils/chat';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { setSelectedChat } from '../features/chat/chat';
 import { formatDistanceToNow } from 'date-fns';
+import { Socket } from 'socket.io-client';
 import { Avatar } from './';
 
 interface SidebarChatProps {
   chat: IChat;
+  socket: React.MutableRefObject<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>;
 }
 
-const SidebarChat: React.FC<SidebarChatProps> = ({ chat }) => {
+const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const sender = getSenderFull(user!, chat.users);
@@ -18,7 +27,10 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat }) => {
   return (
     <div
       className="w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50"
-      onClick={() => dispatch(setSelectedChat(chat))}
+      onClick={() => {
+        dispatch(setSelectedChat(chat));
+        socket?.current?.emit('joinChat', chat.id);
+      }}
     >
       <div className="relative">
         {chat.is_group_chat ? (

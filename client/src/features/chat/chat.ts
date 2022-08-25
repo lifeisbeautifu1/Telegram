@@ -8,6 +8,7 @@ export interface AuthState {
   chats: IChat[];
   selectedChat: IChat | null;
   messages: IMessage[];
+  refetch: boolean;
 }
 
 const initialState: AuthState = {
@@ -15,6 +16,7 @@ const initialState: AuthState = {
   chats: [],
   selectedChat: null,
   messages: [],
+  refetch: false,
 };
 
 export const fetchChats = createAsyncThunk(
@@ -66,6 +68,9 @@ export const chatSlice = createSlice({
   reducers: {
     setSelectedChat: (state, action: PayloadAction<IChat>) => {
       state.selectedChat = action.payload;
+    },
+    toggleRefetch: (state) => {
+      state.refetch = !state.refetch;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -119,6 +124,6 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedChat } = chatSlice.actions;
+export const { toggleRefetch, setSelectedChat } = chatSlice.actions;
 
 export default chatSlice.reducer;

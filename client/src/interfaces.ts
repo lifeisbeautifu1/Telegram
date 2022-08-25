@@ -35,3 +35,14 @@ export interface IMessage {
   sender: IUser;
   created_at: string;
 }
+
+
+export interface ServerToClientEvents {
+  messageReceived: (message: any) => void;
+}
+
+export interface ClientToServerEvents {
+  setup: (id: string) => void;
+  joinChat: (id: string) => void;
+  sendMessage: (message: any) => void;
+}

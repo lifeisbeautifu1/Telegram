@@ -1,14 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Socket } from 'socket.io-client';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchMessages, sendMessage } from '../features/chat/chat';
 import { getSenderFull } from '../utils/chat';
 import { Message, Avatar } from './';
+import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
-const Chat = () => {
+interface ChatProps {
+  socket: React.MutableRefObject<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>;
+}
+
+const Chat: React.FC<ChatProps> = ({ socket }) => {
   const dispatch = useAppDispatch();
 
-  const { selectedChat: chat, messages } = useAppSelector(
+  const { selectedChat: chat, messages, refetch } = useAppSelector(
     (state) => state.chat
   );
 
@@ -27,6 +36,11 @@ const Chat = () => {
       })
     );
     setContent('');
+    socket?.current?.emit('sendMessage', {
+      content,
+      chat,
+      sender: user,
+    });
   };
 
   useEffect(() => {
@@ -34,7 +48,7 @@ const Chat = () => {
       dispatch(fetchMessages(chat));
       inputRef?.current?.focus();
     }
-  }, [chat, dispatch]);
+  }, [chat, dispatch, refetch]);
 
   return (
     <div
