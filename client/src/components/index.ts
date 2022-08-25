@@ -7,5 +7,6 @@ export { default as SidebarContacts } from './SidebarContacts';
 export { default as Avatar } from './Avatar';
 export { default as Message } from './Message';
 export { default as SidebarChat } from './SidebarChat';
+export { default as SidebarUser } from './SidebarUser';
 export { default as MessangerLayout } from './MessangerLayout';
 export { default as ProtectedRoute } from './ProtectedRoute';

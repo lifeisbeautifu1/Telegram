@@ -1,22 +1,55 @@
 import { AiOutlineSearch } from 'react-icons/ai';
-import { IoCreateOutline } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Socket } from 'socket.io-client';
 
-const SidebarContacts = () => {
+import { searchUsers, resetSearchUsers } from '../features/users/users';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { SidebarUser } from './';
+import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
+
+interface SidebarContactsProps {
+  socket: React.MutableRefObject<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>;
+}
+
+const SidebarContacts: React.FC<SidebarContactsProps> = ({ socket }) => {
   const { pathname } = useLocation();
+
+  const dispatch = useAppDispatch();
+
+  const { searchUsers: users } = useAppSelector((state) => state.users);
+
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (search.trim()) {
+      dispatch(searchUsers(search));
+    } else {
+      dispatch(resetSearchUsers());
+    }
+  }, [search, dispatch]);
 
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
-      <div className="py-2 px-4 flex items-center gap-4 justify-center">
+      <div className="py-[15px] px-4 flex items-center gap-4 justify-center">
         <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 p-[5px] px-[8px] w-full rounded-md text-xl relative">
           <AiOutlineSearch className="text-gray-600" />
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search users"
             className="bg-transparent w-full h-full outline-none text-sm"
           />
         </div>
-        <IoCreateOutline className="w-7 h-7 cursor-pointer text-sky-400" />
+      </div>
+
+      <div className="h-full flex flex-col overflow-y-scroll">
+        {users &&
+          users.map((u) => <SidebarUser socket={socket} key={u.id} user={u} />)}
       </div>
 
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">

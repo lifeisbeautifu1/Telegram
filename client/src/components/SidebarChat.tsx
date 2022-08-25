@@ -21,7 +21,10 @@ interface SidebarChatProps {
 const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const { onlineUsers, selectedChat } = useAppSelector((state) => state.chat);
+  const { selectedChat } = useAppSelector((state) => state.chat);
+
+  const { onlineUsers } = useAppSelector((state) => state.users);
+
   const dispatch = useAppDispatch();
 
   const sender = getSenderFull(user!, chat.users);

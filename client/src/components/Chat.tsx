@@ -22,8 +22,9 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
     selectedChat: chat,
     messages,
     refetch,
-    onlineUsers,
   } = useAppSelector((state) => state.chat);
+
+  const { onlineUsers } = useAppSelector((state) => state.users);
 
   const { user } = useAppSelector((state) => state.auth);
 

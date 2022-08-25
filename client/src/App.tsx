@@ -15,7 +15,8 @@ import { Home, Login, Register } from './pages';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { ServerToClientEvents, ClientToServerEvents } from './interfaces';
 import { init } from './features/auth/auth';
-import { setOnlineUsers, toggleRefetch } from './features/chat/chat';
+import { toggleRefetch } from './features/chat/chat';
+import { setOnlineUsers } from './features/users/users';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
@@ -78,7 +79,7 @@ const App = () => {
           path="/messanger/contacts"
           element={
             <>
-              <SidebarContacts />
+              <SidebarContacts socket={socket} />
               <Chat socket={socket} />
             </>
           }

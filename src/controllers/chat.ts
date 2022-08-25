@@ -59,10 +59,10 @@ export const accessChat = async (req: Request, res: Response) => {
     );
   }
   const users = (
-    await query('SELECT username, image_url FROM users WHERE id IN ($1, $2);', [
-      res.locals.user.id,
-      userId,
-    ])
+    await query(
+      'SELECT id, username, image_url FROM users WHERE id IN ($1, $2);',
+      [res.locals.user.id, userId]
+    )
   ).rows;
   chat.users = users;
   res.status(StatusCodes.OK).json(chat);

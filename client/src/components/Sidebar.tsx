@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
 
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
-      <div className="py-2 px-4 flex items-center gap-4 justify-center">
+      <div className="py-[15px] px-4 flex items-center gap-4 justify-center">
         <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 p-[5px] px-[8px] w-full rounded-md text-xl relative">
           <AiOutlineSearch className="text-gray-600" />
           <input
@@ -71,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
         </div>
         <IoCreateOutline className="w-7 h-7 cursor-pointer text-sky-400" />
       </div>
-      <div className=" h-full flex flex-col">
+      <div className=" h-full flex flex-col overflow-y-scroll">
         {filteredChats &&
           filteredChats.map((chat) => (
             <SidebarChat socket={socket} key={chat.id} chat={chat} />

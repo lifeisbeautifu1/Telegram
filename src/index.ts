@@ -86,6 +86,11 @@ const start = async () => {
         console.log(`User joined room ${room}`.blue.bold);
       });
 
+      socket.on('refetchChats', (userId) => {
+        const user = getUser(userId);
+        if (user) socket.in(user.userId).emit('messageReceived', '');
+      });
+
       socket.on('sendMessage', (newMessageReceived) => {
         const chat = newMessageReceived.chat;
 

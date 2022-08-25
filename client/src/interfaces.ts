@@ -51,6 +51,7 @@ export interface ClientToServerEvents {
   setup: (id: string) => void;
   joinChat: (id: string) => void;
   sendMessage: (message: any) => void;
+  refetchChats: (userId: string) => void;
 
   addUser: (userId: string) => void;
 }
