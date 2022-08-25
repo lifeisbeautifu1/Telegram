@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Picker from 'emoji-picker-react';
 import { Socket } from 'socket.io-client';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
@@ -28,6 +29,27 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [content, setContent] = useState('');
+
+  const [showPicker, setShowPicker] = useState(false);
+
+  const emojiRef = useRef<any>(null);
+
+  const onEmojiClick = (event: any, emojiObject: any) => {
+    setContent(content + emojiObject.emoji);
+  };
+
+  useEffect(() => {
+    const clickOutside = (e: MouseEvent) => {
+      if (
+        e.target !== emojiRef.current &&
+        !emojiRef.current?.contains(e.target as Node)
+      ) {
+        setShowPicker(false);
+      }
+    };
+    window.addEventListener('click', clickOutside);
+    return () => window.removeEventListener('click', clickOutside);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -143,9 +165,17 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               })}
           </div>
           <form
-            className="mt-auto flex items-center gap-4 py-3 px-4 border-t border-gray-200"
+            className="relative mt-auto flex items-center gap-4 py-3 px-4 border-t border-gray-200"
             onSubmit={handleSubmit}
           >
+            {showPicker && (
+              <div
+                className="absolute
+              -top-[630%] right-16"
+              >
+                <Picker onEmojiClick={onEmojiClick} />
+              </div>
+            )}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -172,6 +202,8 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
+              ref={emojiRef}
+              onClick={() => setShowPicker(!showPicker)}
               strokeWidth={1.5}
               stroke="currentColor"
               className="block ml-auto w-7 h-7 cursor-pointer text-gray-400 hover:text-gray-500"
