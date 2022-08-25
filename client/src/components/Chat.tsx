@@ -111,14 +111,14 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
                   <p className="ml-1 text-xs text-sky-400">
                     {
                       chat?.users?.filter((user) =>
-                        onlineUsers.map((u) => u.userId).includes(user.id)
+                        onlineUsers.map((u) => u.id).includes(user.id)
                       ).length
                     }{' '}
                     online
                   </p>
                 </div>
               ) : onlineUsers
-                  .map((user) => user.userId)
+                  .map((user) => user.id)
                   .includes(getSenderFull(user!, chat?.users).id) ? (
                 <p className="text-xs text-sky-400">online</p>
               ) : (

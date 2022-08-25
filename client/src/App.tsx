@@ -35,6 +35,7 @@ const App = () => {
     ClientToServerEvents
   > | null>(null);
 
+
   useEffect(() => {
     if (user) {
       socket.current = io('http://localhost:5000');

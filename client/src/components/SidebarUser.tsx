@@ -33,7 +33,7 @@ const SidebarUser: React.FC<SidebarUserProps> = ({ user, socket }) => {
     >
       <div className="relative">
         <Avatar letter={user.username[0]} />
-        {onlineUsers.map((user) => user.userId).includes(user.id) && (
+        {onlineUsers.map((user) => user.id).includes(user.id) && (
           <span className="bottom-0 left-8 absolute  w-3 h-3 bg-white border-2 border-sky-400 dark:border-gray-800 rounded-full"></span>
         )}
       </div>
@@ -42,7 +42,7 @@ const SidebarUser: React.FC<SidebarUserProps> = ({ user, socket }) => {
           {user.username}{' '}
         </h1>
         <p className={'text-xs w-full'}>
-          {onlineUsers.map((user) => user.userId).includes(user.id) ? (
+          {onlineUsers.map((user) => user.id).includes(user.id) ? (
             <span className="text-sky-400">Online</span>
           ) : (
             <span className="text-gray-400">last seen 38 minutes ago</span>

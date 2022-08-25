@@ -72,7 +72,10 @@ const start = async () => {
 
       socket.on('addUser', (userId) => {
         addUser(userId, socket.id);
-        io.emit('getUsers', users);
+        io.emit(
+          'getUsers',
+          users.map((user) => ({ id: user.userId }))
+        );
       });
 
       socket.on('disconnect', () => {

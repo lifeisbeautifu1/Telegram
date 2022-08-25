@@ -24,7 +24,7 @@ const Message: React.FC<MessageProps> = ({ message, isNewMessage }) => {
               {minutes >= 10 ? minutes : `0${minutes}`}
             </span>
           </div>
-          <p className="text-xs">{message.content}</p>
+          <p className="text-xs pr-10 ">{message.content}</p>
         </div>
       </div>
     );
@@ -32,7 +32,7 @@ const Message: React.FC<MessageProps> = ({ message, isNewMessage }) => {
     return (
       <div className="w-full pb-1 text-gray-700 flex gap-2">
         <div className="ml-[50px] w-full h-full flex">
-          <p className="text-xs w-full pr-2">{message.content}</p>
+          <p className="text-xs w-full">{message.content}</p>
           <p className="ml-auto text-gray-400 text-xs select-none">
             {hours >= 10 ? hours : `0${hours}`}:
             {minutes >= 10 ? minutes : `0${minutes}`}

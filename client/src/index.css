@@ -5,7 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 
-
 .navbar ul li a:after,
 .navbar ul li button:after,
 .main a:after,
@@ -384,7 +383,7 @@ span.ripple {
 
 .box {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

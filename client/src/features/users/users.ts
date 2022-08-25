@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { IUser, IOnlineUser } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
 export interface AuthState {
   loading: boolean;
-  onlineUsers: IOnlineUser[];
+  onlineUsers: IUser[];
   searchUsers: IUser[];
 }
 
@@ -32,7 +32,7 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setOnlineUsers: (state, action: PayloadAction<IOnlineUser[]>) => {
+    setOnlineUsers: (state, action: PayloadAction<IUser[]>) => {
       state.onlineUsers = action.payload;
     },
     resetSearchUsers: (state) => {

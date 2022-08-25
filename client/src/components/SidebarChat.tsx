@@ -52,7 +52,7 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
           // />
           <>
             <Avatar letter={sender.username[0]} />
-            {onlineUsers.map((user) => user.userId).includes(sender.id) && (
+            {onlineUsers.map((user) => user.id).includes(sender.id) && (
               <span className="bottom-0 left-8 absolute  w-3 h-3 bg-white border-2 border-sky-400 dark:border-gray-800 rounded-full"></span>
             )}
           </>
