@@ -7,12 +7,14 @@ export interface AuthState {
   loading: boolean;
   onlineUsers: IUser[];
   searchUsers: IUser[];
+  selectedUsers: IUser[];
 }
 
 const initialState: AuthState = {
   loading: false,
   onlineUsers: [],
   searchUsers: [],
+  selectedUsers: [],
 };
 
 export const searchUsers = createAsyncThunk(
@@ -38,6 +40,17 @@ export const usersSlice = createSlice({
     resetSearchUsers: (state) => {
       state.searchUsers = [];
     },
+    addSelectedUser: (state, action: PayloadAction<IUser>) => {
+      state.selectedUsers.push(action.payload);
+    },
+    removeSelectedUser: (state, action: PayloadAction<IUser>) => {
+      state.selectedUsers = state.selectedUsers.filter(
+        (u) => u.id !== action.payload.id
+      );
+    },
+    resetSelectedUsers: (state) => {
+      state.selectedUsers = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -57,6 +70,12 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { setOnlineUsers, resetSearchUsers } = usersSlice.actions;
+export const {
+  setOnlineUsers,
+  resetSearchUsers,
+  addSelectedUser,
+  removeSelectedUser,
+  resetSelectedUsers,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

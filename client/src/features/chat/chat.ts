@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
 import { IChat, IMessage } from '../../interfaces';
 
 export interface AuthState {
@@ -9,6 +10,8 @@ export interface AuthState {
   selectedChat: IChat | null;
   messages: IMessage[];
   refetch: boolean;
+  createChat: boolean;
+  createChatName: boolean;
 }
 
 const initialState: AuthState = {
@@ -17,6 +20,8 @@ const initialState: AuthState = {
   selectedChat: null,
   messages: [],
   refetch: false,
+  createChat: false,
+  createChatName: false,
 };
 
 export const fetchChats = createAsyncThunk(
@@ -76,6 +81,25 @@ export const accessChat = createAsyncThunk(
   }
 );
 
+export const createGroupChat = createAsyncThunk(
+  'auth/createGroupChat',
+  async (name: string, thunkAPI) => {
+    try {
+      // @ts-ignore
+      const users = thunkAPI.getState().users.selectedUsers.map((u) => u.id);
+
+      const { data }: any = await axios.post('/chat/group', {
+        name,
+        users: JSON.stringify(users),
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue('error');
+    }
+  }
+);
+
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -85,6 +109,12 @@ export const chatSlice = createSlice({
     },
     toggleRefetch: (state) => {
       state.refetch = !state.refetch;
+    },
+    setCreateChat: (state, action: PayloadAction<boolean>) => {
+      state.createChat = action.payload;
+    },
+    setCreateChatName: (state, action: PayloadAction<boolean>) => {
+      state.createChatName = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -145,10 +175,31 @@ export const chatSlice = createSlice({
       })
       .addCase(accessChat.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(createGroupChat.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        createGroupChat.fulfilled,
+        (state, action: PayloadAction<IChat>) => {
+          state.chats.push(action.payload);
+          state.selectedChat = action.payload;
+          state.createChat = false;
+          state.createChatName = false;
+          state.loading = false;
+        }
+      )
+      .addCase(createGroupChat.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
 
-export const { toggleRefetch, setSelectedChat } = chatSlice.actions;
+export const {
+  toggleRefetch,
+  setCreateChat,
+  setSelectedChat,
+  setCreateChatName,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;

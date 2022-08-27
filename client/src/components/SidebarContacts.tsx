@@ -5,7 +5,7 @@ import { Socket } from 'socket.io-client';
 
 import { searchUsers, resetSearchUsers } from '../features/users/users';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { SidebarUser } from './';
+import { User } from './';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
 interface SidebarContactsProps {
@@ -49,7 +49,9 @@ const SidebarContacts: React.FC<SidebarContactsProps> = ({ socket }) => {
 
       <div className="h-full flex flex-col overflow-y-scroll">
         {users &&
-          users.map((u) => <SidebarUser socket={socket} key={u.id} user={u} />)}
+          users.map((u) => (
+            <User socket={socket} contacts={true} key={u.id} user={u} />
+          ))}
       </div>
 
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">

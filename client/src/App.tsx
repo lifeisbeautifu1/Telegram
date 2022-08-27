@@ -7,11 +7,10 @@ import {
   ProtectedRoute,
   Chat,
   MessangerLayout,
-  Sidebar,
   SidebarContacts,
   SidebarSettings,
 } from './components';
-import { Home, Login, Register } from './pages';
+import { Home, Login, Register, Messanger } from './pages';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { ServerToClientEvents, ClientToServerEvents } from './interfaces';
 import { init } from './features/auth/auth';
@@ -34,7 +33,6 @@ const App = () => {
     ServerToClientEvents,
     ClientToServerEvents
   > | null>(null);
-
 
   useEffect(() => {
     if (user) {
@@ -67,15 +65,7 @@ const App = () => {
           </ProtectedRoute>
         }
       >
-        <Route
-          index
-          element={
-            <>
-              <Sidebar socket={socket} />
-              <Chat socket={socket} />
-            </>
-          }
-        />
+        <Route index element={<Messanger socket={socket} />} />
         <Route
           path="/messanger/contacts"
           element={

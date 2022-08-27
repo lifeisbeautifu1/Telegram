@@ -89,7 +89,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
       )}
       {chat && (
         <div className="h-full flex flex-col">
-          <div className="py-2 px-4 flex items-center gap-2 border-b border-gray-200">
+          <div className="py-1 px-4 flex items-center gap-2 border-b border-gray-200">
             <Avatar
               letter={
                 chat && chat?.is_group_chat

@@ -1,36 +1,15 @@
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { useNavigate } from 'react-router-dom';
-import { Socket } from 'socket.io-client';
-import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
-
-import { Avatar } from './';
 import { IUser } from '../interfaces';
-import { accessChat } from '../features/chat/chat';
+import { useAppSelector } from '../app/hooks';
+import { Avatar } from './';
 
-interface SidebarUserProps {
+interface CreateChatUserProps {
   user: IUser;
-  socket: React.MutableRefObject<Socket<
-    ServerToClientEvents,
-    ClientToServerEvents
-  > | null>;
 }
 
-const SidebarUser: React.FC<SidebarUserProps> = ({ user, socket }) => {
+const CreateChatUser: React.FC<CreateChatUserProps> = ({ user }) => {
   const { onlineUsers } = useAppSelector((state) => state.users);
-
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
-
   return (
-    <div
-      className="w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50"
-      onClick={() => {
-        dispatch(accessChat(user.id));
-        navigate('/messanger');
-        socket?.current?.emit('refetchChats', user.id);
-      }}
-    >
+    <div className="w-full px-2 py-1 bg-white rounded  flex items-center gap-2">
       <div className="relative">
         <Avatar letter={user.username[0]} />
         {onlineUsers.map((user) => user.id).includes(user.id) && (
@@ -53,4 +32,4 @@ const SidebarUser: React.FC<SidebarUserProps> = ({ user, socket }) => {
   );
 };
 
-export default SidebarUser;
+export default CreateChatUser;

@@ -119,12 +119,13 @@ export const createGroupChat = async (req: Request, res: Response) => {
 
   const users = JSON.parse(req.body.users);
 
+  users.push(res.locals.user.id);
+
   if (users.length < 2) {
     throw new BadRequestError(
       'More than 2 users required to form a group chat'
     );
   }
-  users.push(res.locals.user.id);
 
   const groupChat = (
     await query(
@@ -135,7 +136,7 @@ export const createGroupChat = async (req: Request, res: Response) => {
 
   groupChat.group_admin = res.locals.user;
 
-  const groupUsers = [res.locals.user];
+  const groupUsers = [];
   for (const user of users) {
     await query('INSERT INTO chat_user (chat_id, user_id) VALUES ($1, $2)', [
       groupChat.id,

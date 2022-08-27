@@ -6,7 +6,7 @@ import { Socket } from 'socket.io-client';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
-import { fetchChats } from '../features/chat/chat';
+import { fetchChats, setCreateChat } from '../features/chat/chat';
 import { SidebarChat } from './';
 import { getSenderFull } from '../utils/chat';
 
@@ -58,8 +58,8 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
 
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
-      <div className="py-[15px] px-4 flex items-center gap-4 justify-center">
-        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 p-[5px] px-[8px] w-full rounded-md text-xl relative">
+      <div className="py-[11px] px-4 flex  items-center gap-4 justify-center">
+        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 py-[5px] px-[8px] w-full rounded-md text-xl relative">
           <AiOutlineSearch className="text-gray-600" />
           <input
             type="text"
@@ -69,7 +69,10 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
             className="bg-transparent w-full h-full outline-none text-sm"
           />
         </div>
-        <div className="w-7 h-7 relative group">
+        <div
+          className="w-7 h-7 relative group"
+          onClick={() => dispatch(setCreateChat(true))}
+        >
           <IoCreateOutline className="w-full h-full cursor-pointer text-sky-400" />
           <span className="tooltip py-1 whitespace-nowrap px-2 absolute left-[-0%] top-[125%] rounded bg-gray-100 text-gray-500 text-xs shadow invisible group-hover:visible translate-x-[-37%]">
             Create chat
