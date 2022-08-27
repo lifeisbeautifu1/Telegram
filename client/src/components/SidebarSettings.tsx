@@ -1,10 +1,372 @@
 import { Link, useLocation } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { BiNotification } from 'react-icons/bi';
+import { RiDatabase2Fill } from 'react-icons/ri';
+import { FaGlobe } from 'react-icons/fa';
+import { IoMdLock } from 'react-icons/io';
+import { IoBrush } from 'react-icons/io5';
+import { TbSticker } from 'react-icons/tb';
+import { MdOutlineComputer } from 'react-icons/md';
+
+import { useAppSelector } from '../app/hooks';
+import { Avatar } from './';
 
 const SidebarSettings = () => {
   const { pathname } = useLocation();
 
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
+      <div className="py-[11px] px-4 flex  items-center gap-4 justify-center border-b border-gray-200">
+        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 py-[5px] px-[8px] w-full rounded-md text-xl relative ">
+          <AiOutlineSearch className="text-gray-600" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="bg-transparent w-full h-full outline-none text-sm"
+          />
+        </div>
+        <div className="cursor-pointer text-sky-400 text-sm text-medium">
+          Edit
+        </div>
+      </div>
+      <div className="h-full px-2 py-4 flex flex-col">
+        <div className="rounded-lg p-4 flex  items-center gap-4 cursor-pointer">
+          <Avatar letter={user?.username[0] || 'U'} />
+          <div className="flex flex-col  text-xs ">
+            <h1 className="capitalize font-semibold">{user?.username}</h1>
+            <h1 className="text-gray-400">{user?.email}</h1>
+          </div>
+          <div className="ml-auto flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4 text-gray-400"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
+        </div>
+        <div className="text-sky-400 p-4 cursor-pointer flex items-center gap-2 ">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+            />
+          </svg>
+          <span className="text-xs">Add Account</span>
+        </div>
+        <ul className="p-4 flex flex-col gap-2 h-full">
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-gray-500 flex p-1 rounded items-center justify-center text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+            <p className="text-xs ml-2">General</p>
+            <div className="ml-auto flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-rose-500 flex p-1 rounded items-center justify-center text-white">
+              <BiNotification className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Notifications and Sounds</p>
+            <div className="ml-auto flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-blue-500 flex p-1 rounded items-center justify-center text-white">
+              <IoMdLock className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Privacy and Security</p>
+            <div className="ml-auto flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-green-500 flex p-1 rounded items-center justify-center text-white">
+              <RiDatabase2Fill className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Data and Storage</p>
+            <div className="ml-auto flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-orange-500 flex p-1 rounded items-center justify-center text-white">
+              <MdOutlineComputer className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Active Sessions</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <span className="text-xs">4</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-sky-500 flex p-1 rounded items-center justify-center text-white">
+              <IoBrush className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Appearance</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-purple-500 flex p-1 rounded items-center justify-center text-white">
+              <FaGlobe className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Language</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <span className="text-xs">English</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-orange-500 flex p-1 rounded items-center justify-center text-white">
+              <TbSticker className="w-4 h-4" />
+            </div>
+            <p className="text-xs ml-2">Stickers and Emoji</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-purple-500 flex p-1 rounded items-center justify-center text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4"
+              >
+                <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+              </svg>
+            </div>
+            <p className="text-xs ml-2">Chat Folders</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="mt-auto cursor-pointer flex items-center">
+            <div className="bg-sky-500 flex p-1 rounded items-center justify-center text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <p className="text-xs ml-2">Telegram FAQ</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+          <li className="cursor-pointer flex items-center">
+            <div className="bg-gray-500  flex p-1 rounded items-center justify-center text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.804 21.644A6.707 6.707 0 006 21.75a6.721 6.721 0 003.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 01-.814 1.686.75.75 0 00.44 1.223zM8.25 10.875a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM10.875 12a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zm4.875-1.125a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <p className="text-xs ml-2">Ask a Question</p>
+            <div className="ml-auto flex items-center justify-center text-gray-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4 "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">
         <Link
           to="/messanger/contacts"
