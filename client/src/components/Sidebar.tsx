@@ -69,7 +69,12 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
             className="bg-transparent w-full h-full outline-none text-sm"
           />
         </div>
-        <IoCreateOutline className="w-7 h-7 cursor-pointer text-sky-400" />
+        <div className="w-7 h-7 relative group">
+          <IoCreateOutline className="w-full h-full cursor-pointer text-sky-400" />
+          <span className="tooltip py-1 whitespace-nowrap px-2 absolute left-[-0%] top-[125%] rounded bg-gray-100 text-gray-500 text-xs shadow invisible group-hover:visible translate-x-[-37%]">
+            Create chat
+          </span>
+        </div>
       </div>
       <div className=" h-full flex flex-col overflow-y-scroll">
         {filteredChats &&

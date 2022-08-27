@@ -408,4 +408,18 @@ span.ripple {
 }
 
 
+.tooltip::before {
+  content: '';
+  width: 0; 
+  height: 0; 
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent; 
+  border-bottom: 5px solid rgb(243, 244 ,246);
+
+}
+
 
