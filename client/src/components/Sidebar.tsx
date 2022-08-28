@@ -6,7 +6,11 @@ import { Socket } from 'socket.io-client';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
-import { fetchChats, setCreateChat } from '../features/chat/chat';
+import {
+  fetchChats,
+  setCreateChat,
+  setIsChatInfo,
+} from '../features/chat/chat';
 import { SidebarChat } from './';
 import { getSenderFull } from '../utils/chat';
 
@@ -88,6 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
 
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200 dark:border-gray-500">
         <Link
+          onClick={() => dispatch(setIsChatInfo(false))}
           to="/messanger/contacts"
           className={pathname === '/messanger/contacts' ? 'active' : ''}
         >
@@ -134,6 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
         </Link>
         <Link
           to="/messanger/settings"
+          onClick={() => dispatch(setIsChatInfo(false))}
           className={pathname === '/messanger/settings' ? 'active' : ''}
         >
           <svg

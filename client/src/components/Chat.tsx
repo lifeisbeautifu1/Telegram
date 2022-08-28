@@ -3,9 +3,13 @@ import Picker from 'emoji-picker-react';
 import { Socket } from 'socket.io-client';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { fetchMessages, sendMessage } from '../features/chat/chat';
+import {
+  fetchMessages,
+  sendMessage,
+  setIsChatInfo,
+} from '../features/chat/chat';
 import { getSenderFull, isNewMessage } from '../utils/chat';
-import { Message, Avatar } from './';
+import { Message, Avatar, ChatInfo } from './';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
 interface ChatProps {
@@ -22,6 +26,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
     selectedChat: chat,
     messages,
     refetch,
+    isChatInfo,
   } = useAppSelector((state) => state.chat);
 
   const { onlineUsers } = useAppSelector((state) => state.users);
@@ -80,15 +85,16 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
     <div
       className={`${
         !chat &&
+        !isChatInfo &&
         'bg-neutral-100 dark:bg-slate-600 flex items-center justify-center'
       } w-full`}
     >
-      {!chat && (
+      {!chat && !isChatInfo && (
         <span className="py-1 px-2 text-sm text-gray-400 dark:text-gray-300 bg-white dark:bg-slate-500 rounded-[30px]">
           Select chat to start messaging
         </span>
       )}
-      {chat && (
+      {chat && !isChatInfo ? (
         <div className="h-full flex flex-col">
           <div className="py-1 px-4 flex items-center gap-2 border-b border-gray-200 dark:border-gray-500 dark:bg-slate-600">
             <Avatar
@@ -163,6 +169,11 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
+                onClick={() => {
+                  if (chat.is_group_chat) {
+                    dispatch(setIsChatInfo(true));
+                  }
+                }}
                 className="w-6 h-6 text-sky-400 cursor-pointer transition duration-300 hover:scale-110"
               >
                 <path
@@ -251,6 +262,8 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
             </svg>
           </form>
         </div>
+      ) : (
+        chat && isChatInfo && <ChatInfo socket={socket} />
       )}
     </div>
   );

@@ -12,6 +12,7 @@ export interface ChatState {
   refetch: boolean;
   createChat: boolean;
   createChatName: boolean;
+  isChatInfo: boolean;
 }
 
 const initialState: ChatState = {
@@ -22,6 +23,7 @@ const initialState: ChatState = {
   refetch: false,
   createChat: false,
   createChatName: false,
+  isChatInfo: false,
 };
 
 export const fetchChats = createAsyncThunk(
@@ -100,6 +102,27 @@ export const createGroupChat = createAsyncThunk(
   }
 );
 
+export const leaveGroupChat = createAsyncThunk(
+  'auth/leaveGroupChat',
+  async (_, thunkAPI) => {
+    try {
+      // @ts-ignore
+      const user = thunkAPI.getState().auth.user;
+      // @ts-ignore
+      const selectedChat = thunkAPI.getState().chat.selectedChat;
+
+      const { data }: any = await axios.patch('/chat/group/remove', {
+        userId: user.id,
+        chatId: selectedChat.id,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue('error');
+    }
+  }
+);
+
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -115,6 +138,9 @@ export const chatSlice = createSlice({
     },
     setCreateChatName: (state, action: PayloadAction<boolean>) => {
       state.createChatName = action.payload;
+    },
+    setIsChatInfo: (state, action: PayloadAction<boolean>) => {
+      state.isChatInfo = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -191,6 +217,22 @@ export const chatSlice = createSlice({
       )
       .addCase(createGroupChat.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(leaveGroupChat.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        leaveGroupChat.fulfilled,
+        (state, action: PayloadAction<IChat>) => {
+          state.chats = state.chats.filter(
+            (chat) => chat.id !== action.payload.id
+          );
+          state.selectedChat = null;
+          state.loading = false;
+        }
+      )
+      .addCase(leaveGroupChat.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
@@ -200,6 +242,7 @@ export const {
   setCreateChat,
   setSelectedChat,
   setCreateChatName,
+  setIsChatInfo,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

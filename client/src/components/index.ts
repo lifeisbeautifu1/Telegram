@@ -14,3 +14,4 @@ export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as CreateChat } from './CreateChat';
 export { default as CreateChatUser } from './CreateChatUser';
 export { default as Settings } from './Settings';
+export { default as ChatInfo } from './ChatInfo';

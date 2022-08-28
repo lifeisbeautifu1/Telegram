@@ -5,7 +5,11 @@ import {
 } from '../interfaces';
 import { getSenderFull } from '../utils/chat';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { setCreateChat, setSelectedChat } from '../features/chat/chat';
+import {
+  setCreateChat,
+  setSelectedChat,
+  setIsChatInfo,
+} from '../features/chat/chat';
 import { formatDistanceToNow } from 'date-fns';
 import { Socket } from 'socket.io-client';
 import { Avatar } from './';
@@ -40,6 +44,7 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
       onClick={() => {
         dispatch(setSelectedChat(chat));
         dispatch(setCreateChat(false));
+        dispatch(setIsChatInfo(false));
         socket?.current?.emit('joinChat', chat.id);
       }}
     >

@@ -11,7 +11,11 @@ import {
   removeSelectedUser,
   resetSelectedUsers,
 } from '../features/users/users';
-import { accessChat, setCreateChat } from '../features/chat/chat';
+import {
+  accessChat,
+  setCreateChat,
+  setIsChatInfo,
+} from '../features/chat/chat';
 
 interface UserProps {
   user: IUser;
@@ -44,6 +48,7 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
           dispatch(accessChat(user.id));
           dispatch(setCreateChat(false));
           dispatch(resetSelectedUsers());
+          dispatch(setIsChatInfo(false));
           navigate('/messanger');
           socket?.current?.emit('refetchChats', user.id);
         } else {
