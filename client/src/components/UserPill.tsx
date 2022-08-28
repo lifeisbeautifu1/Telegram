@@ -10,7 +10,7 @@ const UserPill: React.FC<UserPillProps> = ({ user }) => {
   const dispatch = useAppDispatch();
   return (
     <div
-      className="bg-sky-400 cursor-pointer capitalize text-white rounded text-xs py-[2px] px-1 flex items-center gap-1"
+      className="bg-sky-400 dark:bg-sky-500 cursor-pointer capitalize text-white rounded text-xs py-[2px] px-1 flex items-center gap-1"
       onClick={() => dispatch(removeSelectedUser(user))}
     >
       {user.username}

@@ -168,7 +168,7 @@ const Login = () => {
           </div>
           <label
             htmlFor="remember"
-            className="ml-8 cursor-pointer block  text-gray-600 dark:text-gray-300"
+            className="ml-8 cursor-pointer block  text-gray-600 "
           >
             Keep me sign in
           </label>

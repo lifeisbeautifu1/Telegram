@@ -38,7 +38,7 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
 
   return (
     <div
-      className="w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50"
+      className="w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50 dark:hover:bg-slate-500"
       onClick={() => {
         if (contacts) {
           dispatch(accessChat(user.id));
@@ -62,7 +62,7 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
         )}
       </div>
       <div className="overflow-hidden w-full py-[2px] flex flex-col justify-center">
-        <h1 className="text-xs capitalize font-medium flex  justify-between items-center">
+        <h1 className="text-xs capitalize font-medium flex  justify-between items-center dark:text-white">
           {user.username}{' '}
         </h1>
         <p className={'text-xs w-full'}>
@@ -76,8 +76,10 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
       {!contacts && (
         <div className="flex items-center">
           <div
-            className={`bg-gray-100 rounded-full cursor-pointer flex items-center justify-center w-5 h-5 ${
-              selected ? 'bg-sky-400 text-white' : 'shadow-inner'
+            className={`bg-gray-100 dark:bg-transparent dark:border dark:border-white rounded-full cursor-pointer flex items-center justify-center w-5 h-5 ${
+              selected
+                ? 'bg-sky-400 dark:bg-sky-400 text-white'
+                : 'shadow-inner'
             }`}
           >
             {selected && (

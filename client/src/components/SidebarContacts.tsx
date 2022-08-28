@@ -33,16 +33,16 @@ const SidebarContacts: React.FC<SidebarContactsProps> = ({ socket }) => {
   }, [search, dispatch]);
 
   return (
-    <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
+    <div className="w-[30%] sidebar border-r border-gray-200 dark:border-gray-500 flex flex-col dark:bg-slate-600">
       <div className="py-[15px] px-4 flex items-center gap-4 justify-center">
-        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 p-[5px] px-[8px] w-full rounded-md text-xl relative">
-          <AiOutlineSearch className="text-gray-600" />
+        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 dark:bg-slate-500 p-[5px] px-[8px] w-full rounded-md text-xl relative">
+          <AiOutlineSearch className="text-gray-600 dark:text-gray-300" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search users"
-            className="bg-transparent w-full h-full outline-none text-sm"
+            className="bg-transparent w-full h-full outline-none text-sm dark:text-gray-300 dark:placeholder:text-gray-300"
           />
         </div>
       </div>
@@ -54,7 +54,7 @@ const SidebarContacts: React.FC<SidebarContactsProps> = ({ socket }) => {
           ))}
       </div>
 
-      <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">
+      <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200 dark:border-gray-500">
         <Link
           to="/messanger/contacts"
           className={pathname === '/messanger/contacts' ? 'active' : ''}

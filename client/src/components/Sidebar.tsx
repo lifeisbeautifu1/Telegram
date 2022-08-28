@@ -57,16 +57,16 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
   }, [filter, chats, user]);
 
   return (
-    <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
+    <div className="w-[30%] sidebar border-r border-gray-200 dark:border-gray-500 dark:bg-slate-600 flex flex-col">
       <div className="py-[11px] px-4 flex  items-center gap-4 justify-center">
-        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 py-[5px] px-[8px] w-full rounded-md text-xl relative">
-          <AiOutlineSearch className="text-gray-600" />
+        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 py-[5px] px-[8px] dark:bg-slate-500 w-full rounded-md text-xl relative">
+          <AiOutlineSearch className="text-gray-600 dark:text-gray-300" />
           <input
             type="text"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             placeholder="Search"
-            className="bg-transparent w-full h-full outline-none text-sm"
+            className="dark:placeholder:text-gray-300 dark:text-gray-300 bg-transparent w-full h-full outline-none text-sm"
           />
         </div>
         <div
@@ -74,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
           onClick={() => dispatch(setCreateChat(true))}
         >
           <IoCreateOutline className="w-full h-full cursor-pointer text-sky-400" />
-          <span className="tooltip py-1 whitespace-nowrap px-2 absolute left-[-0%] top-[125%] rounded bg-gray-100 text-gray-500 text-xs shadow invisible group-hover:visible translate-x-[-37%]">
+          <span className="tooltip py-1 whitespace-nowrap px-2 absolute left-[-0%] top-[125%] rounded before:border-gray-100 bg-gray-100 dark:bg-slate-500 text-gray-500 dark:text-gray-300  text-xs shadow invisible group-hover:visible translate-x-[-37%]">
             Create chat
           </span>
         </div>
@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
           ))}
       </div>
 
-      <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">
+      <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200 dark:border-gray-500">
         <Link
           to="/messanger/contacts"
           className={pathname === '/messanger/contacts' ? 'active' : ''}

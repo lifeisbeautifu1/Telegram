@@ -79,17 +79,18 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
   return (
     <div
       className={`${
-        !chat && 'bg-neutral-100 flex items-center justify-center'
+        !chat &&
+        'bg-neutral-100 dark:bg-slate-600 flex items-center justify-center'
       } w-full`}
     >
       {!chat && (
-        <span className="py-1 px-2 text-sm text-gray-400 bg-white rounded-[30px]">
+        <span className="py-1 px-2 text-sm text-gray-400 dark:text-gray-300 bg-white dark:bg-slate-500 rounded-[30px]">
           Select chat to start messaging
         </span>
       )}
       {chat && (
         <div className="h-full flex flex-col">
-          <div className="py-1 px-4 flex items-center gap-2 border-b border-gray-200">
+          <div className="py-1 px-4 flex items-center gap-2 border-b border-gray-200 dark:border-gray-500 dark:bg-slate-600">
             <Avatar
               letter={
                 chat && chat?.is_group_chat
@@ -98,7 +99,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               }
             />
             <div className="flex flex-col justify-center">
-              <h1 className="text-xs text-medium capitalize">
+              <h1 className="text-xs text-medium capitalize dark:text-white">
                 {chat && chat?.is_group_chat
                   ? chat?.chat_name
                   : getSenderFull(user!, chat?.users).username}
@@ -172,7 +173,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               </svg>
             </div>
           </div>
-          <div className="w-full h-full flex flex-col-reverse px-4 pb-4 overflow-y-scroll">
+          <div className="w-full h-full flex flex-col-reverse px-4 pb-4 overflow-y-scroll dark:bg-slate-600">
             {messages &&
               messages.map((m, index) => {
                 return (
@@ -185,7 +186,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               })}
           </div>
           <form
-            className="relative mt-auto flex items-center gap-4 py-3 px-4 border-t border-gray-200"
+            className="relative mt-auto flex items-center gap-4 py-3 px-4 border-t border-gray-200 dark:border-gray-500 dark:bg-slate-600"
             onSubmit={handleSubmit}
           >
             {showPicker && (
@@ -202,7 +203,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-7 h-7 cursor-pointer text-gray-400 hover:text-gray-500"
+              className="w-7 h-7 cursor-pointer text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
             >
               <path
                 strokeLinecap="round"
@@ -216,7 +217,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               onChange={(e) => setContent(e.target.value)}
               ref={inputRef}
               placeholder="Write a message"
-              className="rounded text-gray-700  px-2  placeholder:text-gray-300 w-full outline-none"
+              className="rounded text-gray-700 dark:text-gray-300 bg-transparent  px-2  placeholder:text-gray-300  w-full outline-none"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +227,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               onClick={() => setShowPicker(!showPicker)}
               strokeWidth={1.5}
               stroke="currentColor"
-              className="block ml-auto w-7 h-7 cursor-pointer text-gray-400 hover:text-gray-500"
+              className="block ml-auto w-7 h-7 cursor-pointer text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
             >
               <path
                 strokeLinecap="round"
@@ -240,7 +241,7 @@ const Chat: React.FC<ChatProps> = ({ socket }) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6 cursor-pointer text-gray-400 hover:text-gray-500"
+              className="w-6 h-6 cursor-pointer text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
             >
               <path
                 strokeLinecap="round"

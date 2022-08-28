@@ -4,7 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
-
 .navbar ul li a:after,
 .navbar ul li button:after,
 .main a:after,
@@ -376,7 +375,6 @@ span.ripple {
   }
 }
 
-
 .app {
   height: calc(100% - 28px);
 }
@@ -388,8 +386,6 @@ span.ripple {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 
 .messanger a.active {
   color: rgb(56, 189, 248);
@@ -407,23 +403,20 @@ span.ripple {
   color: rgb(107, 114, 128);
 }
 
-
 .tooltip::before {
   content: '';
-  width: 0; 
-  height: 0; 
+  width: 0;
+    height: 0;
   position: absolute;
   top: -5px;
   left: 50%;
   transform: translateX(-50%);
   border-left: 5px solid transparent;
-  border-right: 5px solid transparent; 
-  border-bottom: 5px solid rgb(243, 244 ,246);
-
+  border-right: 5px solid transparent;
+  border-bottom-width: 5px solid #444;
 }
 
-
-#switch{
+#switch {
   height: 0;
   width: 0;
   visibility: hidden;
@@ -456,13 +449,7 @@ span.ripple {
   background: rgb(56, 189, 248);
 }
 
-#switch:checked + #forSwitch:after{
+#switch:checked+#forSwitch:after {
   left: calc(100% - 5px);
   transform: translateX(-100%);
 }
-
-
-
-
-
-

@@ -22,31 +22,39 @@ const SidebarSettings = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
-      <div className="py-[11px] px-4 flex  items-center gap-4 justify-center border-b border-gray-200">
-        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 py-[5px] px-[8px] w-full rounded-md text-xl relative ">
-          <AiOutlineSearch className="text-gray-600" />
+    <div className="w-[30%] sidebar border-r border-gray-200 dark:border-gray-500 flex flex-col">
+      <div className="py-[11px] px-4 flex  items-center gap-4 justify-center border-b border-gray-200 dark:bg-slate-600 dark:border-gray-500">
+        <div className="shadow-inner flex items-center gap-2 bg-[#edeef0]/50 py-[5px] px-[8px] dark:bg-slate-500 w-full rounded-md text-xl relative ">
+          <AiOutlineSearch className="text-gray-600 dark:text-gray-300" />
           <input
             type="text"
             placeholder="Search"
-            className="bg-transparent w-full h-full outline-none text-sm"
+            className="bg-transparent dark:text-gray-300 dark:placeholder:text-gray-300 w-full h-full outline-none text-sm"
           />
         </div>
         <div className="cursor-pointer text-sky-400 text-sm text-medium">
           Edit
         </div>
       </div>
-      <div className="h-full px-2 py-4 flex flex-col">
+      <div className="h-full px-2 py-4 flex flex-col dark:bg-slate-600">
         <div
-          className={`rounded-lg p-4 flex  items-center gap-4 cursor-pointer ${
-            isEditProfile && 'bg-sky-400 text-white'
+          className={`rounded-lg p-4 flex  items-center gap-2 cursor-pointer ${
+            isEditProfile && 'bg-sky-400 dark:bg-sky-600 text-white '
           }`}
           onClick={() => dispatch(setIsEditProfile(!isEditProfile))}
         >
-          <Avatar letter={user?.username[0] || 'U'} />
+          <Avatar size="lg" letter={user?.username[0] || 'U'} />
           <div className="flex flex-col  text-xs ">
-            <h1 className="capitalize font-semibold">{user?.username}</h1>
-            <h1 className={`${isEditProfile ? 'text-white' : 'text-gray-400'}`}>
+            <h1 className="capitalize font-semibold dark:text-white">
+              {user?.username}
+            </h1>
+            <h1
+              className={`${
+                isEditProfile
+                  ? 'text-white'
+                  : 'text-gray-400 dark:text-gray-300'
+              }`}
+            >
               {user?.email}
             </h1>
           </div>
@@ -111,7 +119,7 @@ const SidebarSettings = () => {
                 />
               </svg>
             </div>
-            <p className="text-xs ml-2">General</p>
+            <p className="text-xs ml-2 dark:text-gray-300">General</p>
             <div className="ml-auto flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +141,9 @@ const SidebarSettings = () => {
             <div className="bg-rose-500 flex p-1 rounded items-center justify-center text-white">
               <BiNotification className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Notifications and Sounds</p>
+            <p className="text-xs ml-2 dark:text-gray-300">
+              Notifications and Sounds
+            </p>
             <div className="ml-auto flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +165,9 @@ const SidebarSettings = () => {
             <div className="bg-blue-500 flex p-1 rounded items-center justify-center text-white">
               <IoMdLock className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Privacy and Security</p>
+            <p className="text-xs ml-2 dark:text-gray-300">
+              Privacy and Security
+            </p>
             <div className="ml-auto flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +190,7 @@ const SidebarSettings = () => {
             <div className="bg-green-500 flex p-1 rounded items-center justify-center text-white">
               <RiDatabase2Fill className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Data and Storage</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Data and Storage</p>
             <div className="ml-auto flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +212,7 @@ const SidebarSettings = () => {
             <div className="bg-orange-500 flex p-1 rounded items-center justify-center text-white">
               <MdOutlineComputer className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Active Sessions</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Active Sessions</p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <span className="text-xs">4</span>
               <svg
@@ -223,7 +235,7 @@ const SidebarSettings = () => {
             <div className="bg-sky-500 flex p-1 rounded items-center justify-center text-white">
               <IoBrush className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Appearance</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Appearance</p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +257,7 @@ const SidebarSettings = () => {
             <div className="bg-purple-500 flex p-1 rounded items-center justify-center text-white">
               <FaGlobe className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Language</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Language</p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <span className="text-xs">English</span>
               <svg
@@ -268,7 +280,9 @@ const SidebarSettings = () => {
             <div className="bg-orange-500 flex p-1 rounded items-center justify-center text-white">
               <TbSticker className="w-4 h-4" />
             </div>
-            <p className="text-xs ml-2">Stickers and Emoji</p>
+            <p className="text-xs ml-2 dark:text-gray-300">
+              Stickers and Emoji
+            </p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -297,7 +311,7 @@ const SidebarSettings = () => {
                 <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
               </svg>
             </div>
-            <p className="text-xs ml-2">Chat Folders</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Chat Folders</p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -330,7 +344,7 @@ const SidebarSettings = () => {
                 />
               </svg>
             </div>
-            <p className="text-xs ml-2">Telegram FAQ</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Telegram FAQ</p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -363,7 +377,7 @@ const SidebarSettings = () => {
                 />
               </svg>
             </div>
-            <p className="text-xs ml-2">Ask a Question</p>
+            <p className="text-xs ml-2 dark:text-gray-300">Ask a Question</p>
             <div className="ml-auto flex items-center justify-center text-gray-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -383,7 +397,7 @@ const SidebarSettings = () => {
           </li>
         </ul>
       </div>
-      <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200">
+      <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200 dark:border-gray-500 dark:bg-slate-600">
         <Link
           to="/messanger/contacts"
           className={pathname === '/messanger/contacts' ? 'active' : ''}

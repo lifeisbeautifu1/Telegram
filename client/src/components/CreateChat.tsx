@@ -51,7 +51,7 @@ const CreateChat: React.FC<CreateChatProps> = ({ socket }) => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="w-full border-b border-gray-200 py-4 px-4 flex items-center justify-between text-sm">
+      <div className="w-full border-b border-gray-200 dark:border-gray-500 py-4 px-4 flex items-center justify-between text-sm dark:bg-slate-600">
         <div
           className="text-sky-400 cursor-pointer flex items-center"
           onClick={() => {
@@ -81,18 +81,18 @@ const CreateChat: React.FC<CreateChatProps> = ({ socket }) => {
         </div>
         <div>
           {createChatName ? (
-            <>New Group</>
+            <span className="dark:text-white">New Group</span>
           ) : (
             <>
-              Select users{' '}
-              <span className="inline-block ml-1 text-gray-400">
+              <span className="dark:text-white">Select users </span>
+              <span className="inline-block ml-1 text-gray-400 dark:text-gray-400">
                 {selectedUsers.length}/200 000
               </span>
             </>
           )}
         </div>
         <button
-          className="disabled:text-gray-400 text-sky-400"
+          className="disabled:text-gray-400 dark:disabled:text-gray-400 text-sky-400 dark:text-sky-400"
           disabled={selectedUsers.length === 0}
           onClick={() => {
             if (!createChatName) {
@@ -116,14 +116,14 @@ const CreateChat: React.FC<CreateChatProps> = ({ socket }) => {
         </button>
       </div>
       {createChatName ? (
-        <div className="bg-stone-100 w-full h-full ">
+        <div className="bg-stone-100 dark:bg-slate-600 w-full h-full ">
           <div className="flex flex-col items-center max-w-[400px] mx-auto overflow-y-scroll">
-            <div className="bg-white mt-8 w-full rounded flex items-center gap-2 px-4 py-2 shadow">
+            <div className="bg-white dark:bg-slate-500 mt-8 w-full rounded flex items-center gap-2 px-4 py-2 shadow">
               <Avatar letter={!chatName ? 'N' : chatName[0]} />
               <input
                 type="text"
                 value={chatName}
-                className="outline-none text-sm"
+                className="outline-none text-sm dark:placeholder:text-gray-300 dark:bg-transparent dark:text-gray-300"
                 placeholder="Group Name"
                 onChange={(e) => setChatName(e.target.value)}
               />
@@ -137,8 +137,8 @@ const CreateChat: React.FC<CreateChatProps> = ({ socket }) => {
         </div>
       ) : (
         <>
-          <div className="py-2 px-3 w-full border-b border-gray-200">
-            <div className="bg-stone-100 rounded-lg w-full text-sm px-2 py-1 flex items-center gap-1 overflow-x-scroll">
+          <div className="py-2 px-3 w-full border-b border-gray-200 dark:border-gray-500 dark:bg-slate-600">
+            <div className="bg-stone-100 dark:bg-slate-500 rounded-lg w-full text-sm px-2 py-1 flex items-center gap-1 overflow-x-scroll">
               {selectedUsers.map((u) => (
                 <UserPill key={u.id} user={u} />
               ))}
@@ -147,12 +147,12 @@ const CreateChat: React.FC<CreateChatProps> = ({ socket }) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 ref={inputRef}
-                className="outline-none w-full bg-transparent"
+                className="outline-none w-full bg-transparent dark:text-gray-300"
                 placeholder="Who would you like to add?"
               />
             </div>
           </div>
-          <div className="w-full h-full flex flex-col overflow-y-scroll">
+          <div className="w-full h-full dark:bg-slate-600 flex flex-col overflow-y-scroll">
             {users.map((user) => (
               <User key={user.id} user={user} />
             ))}

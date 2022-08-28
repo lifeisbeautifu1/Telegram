@@ -2,28 +2,31 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Avatar } from './';
+import { resetErrors, updateUsername } from '../features/auth/auth';
 import { setIsEditProfile, toggleDarkMode } from '../features/app/app';
 
 const Settings = () => {
   const { isEditProfile, isDarkMode } = useAppSelector((state) => state.app);
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, errors } = useAppSelector((state) => state.auth);
 
   const [username, setUsername] = useState(user?.username || '');
 
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     usernameInputRef?.current?.focus();
     setUsername(user?.username || '');
-  }, [isEditProfile, user?.username]);
+    dispatch(resetErrors());
+  }, [isEditProfile, user?.username, dispatch]);
 
-  const dispatch = useAppDispatch();
   return (
     <>
       {isEditProfile ? (
-        <div className="w-full h-full flex flex-col">
-          <div className="w-full border-b border-gray-200 py-4 px-4 flex items-center justify-between text-sm">
+        <div className="w-full h-full flex flex-col dark:bg-slate-600">
+          <div className="w-full border-b border-gray-200 dark:border-gray-500 dark:bg-slate-600 py-4 px-4 flex items-center justify-between text-sm">
             <div
               className="text-sky-400   cursor-pointer flex items-center"
               onClick={() => dispatch(setIsEditProfile(false))}
@@ -44,22 +47,45 @@ const Settings = () => {
               </svg>
               Back
             </div>
-            <div>Edit Profile</div>
-            <button className="text-sky-400">Done</button>
+            <div className="dark:text-white">Edit Profile</div>
+            <button
+              className="text-sky-400"
+              onClick={() => {
+                if (!username.trim()) {
+                  return;
+                } else if (username === user?.username) {
+                  return;
+                } else {
+                  dispatch(updateUsername(username));
+                }
+              }}
+            >
+              Done
+            </button>
           </div>
-          <div className="bg-gray-200/50 h-full">
+          <div className="bg-gray-200/50 dark:bg-slate-600 h-full">
             <div className="flex flex-col items-center w-3/5 mx-auto mt-10">
-              <div className="bg-white px-4 py-2 rounded-lg w-full flex items-center">
+              <div className="bg-white dark:bg-slate-500 px-4 py-2 rounded-lg w-full flex items-center">
                 <Avatar letter={user?.username[0]!} size="lg" />
-                <div className="ml-2 w-4/5  flex items-center border-b border-gray-200 pb-2">
+                <div className={`ml-2 w-4/5  flex flex-col items-center `}>
                   <input
                     type="text"
                     placeholder="Username"
-                    className="w-full outline-none text-sm"
+                    className="w-full outline-none text-sm dark:bg-transparent dark:text-white dark:placeholder:text-white"
                     ref={usernameInputRef}
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
+                  <div
+                    className={`bg-gray-200 dark:bg-gray-400 h-[1px] w-full my-2 ${
+                      errors?.username && 'bg-red-400'
+                    }`}
+                  />
+                  {errors?.username && (
+                    <small className="text-red-400 text-left w-full text-medium">
+                      {errors.username}
+                    </small>
+                  )}
                 </div>
               </div>
               <p className="mt-2 text-left w-full px-4 text-gray-400 text-xs">
@@ -68,12 +94,11 @@ const Settings = () => {
               <p className="mt-4 mb-2 text-left w-full px-4 text-gray-400 text-xs">
                 BIO
               </p>
-              <div className="bg-white  px-4 py-3 rounded-lg w-full flex items-center">
+              <div className="bg-white dark:bg-slate-500  px-4 py-3 rounded-lg w-full flex items-center">
                 <input
                   type="text"
-                  placeholder="BIO"
-                  className="w-full outline-none text-sm"
-                  value={'happy & grateful'}
+                  placeholder="happy & grateful"
+                  className="w-full outline-none text-sm dark:bg-transparent dark:placeholder:text-white dark:text-white"
                 />
               </div>
               <p className="mt-2 text-left w-full px-4 text-gray-400 text-xs">
@@ -82,9 +107,9 @@ const Settings = () => {
               <p className="text-left w-full px-4 text-gray-400 text-xs">
                 Example: 23 y.o. designer from San Francisco
               </p>
-              <div className="bg-white mt-4 px-4 py-3 rounded-lg w-full flex items-center flex-col">
-                <div className="text-sm flex items-center justify-between w-full pb-2 border-b border-gray-200 cursor-pointer">
-                  <h1>Username</h1>
+              <div className="bg-white dark:bg-slate-500 mt-4 px-4 py-3 rounded-lg w-full flex items-center flex-col">
+                <div className="text-sm flex items-center justify-between w-full pb-2 border-b border-gray-200 dark:border-gray-400 cursor-pointer">
+                  <h1 className="dark:text-white">Username</h1>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -103,8 +128,8 @@ const Settings = () => {
                   </span>
                 </div>
                 <div className="text-sm flex items-center w-full pt-2  cursor-pointer">
-                  <h1>Change Number</h1>
-                  <span className="inline-block ml-auto text-gray-400">
+                  <h1 className="dark:text-white">Change Number</h1>
+                  <span className="inline-block ml-auto text-gray-400 dark:text-gray-300">
                     +7 917 964-59-57
                   </span>
                   <span className="inline-block ml-2">
@@ -125,9 +150,9 @@ const Settings = () => {
                   </span>
                 </div>
               </div>
-              <div className="bg-white mt-4 px-4 py-3 rounded-lg w-full flex items-center flex-col">
+              <div className="bg-white dark:bg-slate-500 mt-4 px-4 py-3 rounded-lg w-full flex items-center flex-col">
                 <div className="text-sm flex items-center justify-between w-full  cursor-pointer">
-                  <h1>Dark Mode</h1>
+                  <h1 className="dark:text-white">Dark Mode</h1>
                   <input
                     type="checkbox"
                     checked={isDarkMode}
@@ -140,20 +165,20 @@ const Settings = () => {
                 </div>
               </div>
 
-              <div className="bg-white mt-4 px-4 py-3 rounded-lg w-full flex items-center flex-col">
-                <div className="text-sm flex items-center justify-between w-full pb-2 border-b border-gray-200 cursor-pointer">
-                  <h1 className="text-sky-400">Add account</h1>
+              <div className="bg-white dark:bg-slate-500 mt-4 px-4 py-3 rounded-lg w-full flex items-center flex-col">
+                <div className="text-sm flex items-center justify-between w-full pb-2 border-b border-gray-200 dark:border-gray-400 cursor-pointer">
+                  <h1 className="text-sky-400 ">Add account</h1>
                 </div>
                 <div className="text-sm flex items-center w-full pt-2 cursor-pointer">
-                  <h1 className="text-red-500">Log out</h1>
+                  <h1 className="text-red-500 dark:text-red-400">Log out</h1>
                 </div>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <div className="w-full h-full bg-stone-100 flex justify-center items-center">
-          <span className="py-1 px-2 text-sm text-gray-400 bg-white rounded-[30px]">
+        <div className="w-full h-full bg-stone-100 dark:bg-slate-600 flex justify-center items-center">
+          <span className="py-1 px-2 text-sm text-gray-400 dark:text-gray-300 bg-white dark:bg-slate-500 rounded-[30px]">
             Select settings
           </span>
         </div>

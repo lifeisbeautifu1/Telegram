@@ -9,7 +9,7 @@ interface CreateChatUserProps {
 const CreateChatUser: React.FC<CreateChatUserProps> = ({ user }) => {
   const { onlineUsers } = useAppSelector((state) => state.users);
   return (
-    <div className="w-full px-2 py-1 bg-white rounded  flex items-center gap-2">
+    <div className="w-full px-2 py-1 bg-white dark:bg-slate-500 rounded  flex items-center gap-2">
       <div className="relative">
         <Avatar letter={user.username[0]} />
         {onlineUsers.map((user) => user.id).includes(user.id) && (
@@ -17,14 +17,16 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({ user }) => {
         )}
       </div>
       <div className="overflow-hidden w-full py-[2px] flex flex-col justify-center">
-        <h1 className="text-xs capitalize font-medium flex  justify-between items-center">
+        <h1 className="text-xs capitalize font-medium flex  justify-between items-center dark:text-white">
           {user.username}{' '}
         </h1>
         <p className={'text-xs w-full'}>
           {onlineUsers.map((user) => user.id).includes(user.id) ? (
             <span className="text-sky-400">Online</span>
           ) : (
-            <span className="text-gray-400">last seen 38 minutes ago</span>
+            <span className="text-gray-400 dark:text-gray-300">
+              last seen 38 minutes ago
+            </span>
           )}
         </p>
       </div>

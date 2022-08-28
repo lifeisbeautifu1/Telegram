@@ -33,8 +33,9 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
 
   return (
     <div
-      className={`w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50 ${
-        selectedChat?.id === chat.id && 'bg-sky-400 hover:bg-sky-400 text-white'
+      className={`w-full p-2 flex gap-2 cursor-pointer hover:bg-stone-50 dark:hover:bg-slate-500 ${
+        selectedChat?.id === chat.id &&
+        'bg-sky-400 dark:bg-slate-500 hover:bg-sky-400 dark:hover:bg-slate-500 text-white '
       }`}
       onClick={() => {
         dispatch(setSelectedChat(chat));
@@ -62,10 +63,12 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
 
       <div className="overflow-hidden w-full py-[2px]">
         <h1 className="text-xs capitalize font-medium flex  justify-between items-center">
-          <span className="box w-[30%]">{chatName}</span>
+          <span className="box w-[30%] dark:text-white">{chatName}</span>
           <span
             className={`text-[10px] ${
-              selectedChat?.id === chat.id ? 'text-white' : 'text-gray-400'
+              selectedChat?.id === chat.id
+                ? 'text-white dark:text-gray-300'
+                : 'text-gray-400'
             }`}
           >
             {chat?.latest_message?.created_at &&
@@ -76,7 +79,9 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
         </h1>
         <p
           className={`text-xs box ${
-            selectedChat?.id === chat.id ? 'text-white' : 'text-gray-400'
+            selectedChat?.id === chat.id
+              ? 'text-white dark:text-gray-300'
+              : 'text-gray-400'
           }`}
         >
           {chat?.latest_message?.content}

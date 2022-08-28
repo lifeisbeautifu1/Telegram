@@ -27,6 +27,8 @@ export const login = createAsyncThunk(
   }
 );
 
+
+
 export const register = createAsyncThunk(
   'auth/register',
   async (formData: IFormData, thunkAPI) => {
@@ -58,10 +60,29 @@ export const init = createAsyncThunk('/auth/init', async (_, thunkAPI) => {
   }
 });
 
+export const updateUsername = createAsyncThunk(
+  'auth/updateUsername',
+  async (username: string, thunkAPI) => {
+    try {
+      const { data } = await axios.post('/user/username', {
+        username,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error?.response?.data?.errors);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    resetErrors: (state) => {
+      state.errors = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -109,9 +130,23 @@ export const authSlice = createSlice({
       })
       .addCase(init.rejected, (state, action: any) => {
         state.loading = false;
+      })
+      .addCase(updateUsername.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUsername.fulfilled, (state, action: any) => {
+        state.user = action.payload;
+        state.loading = false;
+        state.errors = null;
+      })
+      .addCase(updateUsername.rejected, (state, action: any) => {
+        state.errors = action.payload;
+        state.loading = false;
       });
   },
 });
+
+export const { resetErrors } = authSlice.actions;
 
 
 export default authSlice.reducer;
