@@ -8,13 +8,18 @@ import { IoBrush } from 'react-icons/io5';
 import { TbSticker } from 'react-icons/tb';
 import { MdOutlineComputer } from 'react-icons/md';
 
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { setIsEditProfile } from '../features/app/app';
 import { Avatar } from './';
 
 const SidebarSettings = () => {
   const { pathname } = useLocation();
 
   const { user } = useAppSelector((state) => state.auth);
+
+  const { isEditProfile } = useAppSelector((state) => state.app);
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="w-[30%] sidebar border-r border-gray-200 flex flex-col">
@@ -32,13 +37,24 @@ const SidebarSettings = () => {
         </div>
       </div>
       <div className="h-full px-2 py-4 flex flex-col">
-        <div className="rounded-lg p-4 flex  items-center gap-4 cursor-pointer">
+        <div
+          className={`rounded-lg p-4 flex  items-center gap-4 cursor-pointer ${
+            isEditProfile && 'bg-sky-400 text-white'
+          }`}
+          onClick={() => dispatch(setIsEditProfile(!isEditProfile))}
+        >
           <Avatar letter={user?.username[0] || 'U'} />
           <div className="flex flex-col  text-xs ">
             <h1 className="capitalize font-semibold">{user?.username}</h1>
-            <h1 className="text-gray-400">{user?.email}</h1>
+            <h1 className={`${isEditProfile ? 'text-white' : 'text-gray-400'}`}>
+              {user?.email}
+            </h1>
           </div>
-          <div className="ml-auto flex items-center justify-center">
+          <div
+            className={`ml-auto flex items-center justify-center ${
+              isEditProfile && 'hidden'
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

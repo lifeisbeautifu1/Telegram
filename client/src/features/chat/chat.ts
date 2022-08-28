@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { IChat, IMessage } from '../../interfaces';
 
-export interface AuthState {
+export interface ChatState {
   loading: boolean;
   chats: IChat[];
   selectedChat: IChat | null;
@@ -14,7 +14,7 @@ export interface AuthState {
   createChatName: boolean;
 }
 
-const initialState: AuthState = {
+const initialState: ChatState = {
   loading: false,
   chats: [],
   selectedChat: null,

@@ -13,3 +13,4 @@ export { default as MessangerLayout } from './MessangerLayout';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as CreateChat } from './CreateChat';
 export { default as CreateChatUser } from './CreateChatUser';
+export { default as Settings } from './Settings';

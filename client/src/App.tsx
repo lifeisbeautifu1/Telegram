@@ -9,6 +9,7 @@ import {
   MessangerLayout,
   SidebarContacts,
   SidebarSettings,
+  Settings,
 } from './components';
 import { Home, Login, Register, Messanger } from './pages';
 import { useAppDispatch, useAppSelector } from './app/hooks';
@@ -28,6 +29,8 @@ const App = () => {
   }, [dispatch]);
 
   const { user } = useAppSelector((state) => state.auth);
+
+  const { isDarkMode } = useAppSelector((state) => state.app);
 
   const socket = useRef<Socket<
     ServerToClientEvents,
@@ -53,39 +56,41 @@ const App = () => {
   }, [user, dispatch]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route
-        path="/messanger"
-        element={
-          <ProtectedRoute>
-            <MessangerLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Messanger socket={socket} />} />
+    <div className={isDarkMode ? 'dark' : ''}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
-          path="/messanger/contacts"
+          path="/messanger"
           element={
-            <>
-              <SidebarContacts socket={socket} />
-              <Chat socket={socket} />
-            </>
+            <ProtectedRoute>
+              <MessangerLayout />
+            </ProtectedRoute>
           }
-        />
-        <Route
-          path="/messanger/settings"
-          element={
-            <>
-              <SidebarSettings />
-              <div className="w-full">Settings here</div>
-            </>
-          }
-        />
-      </Route>
-    </Routes>
+        >
+          <Route index element={<Messanger socket={socket} />} />
+          <Route
+            path="/messanger/contacts"
+            element={
+              <>
+                <SidebarContacts socket={socket} />
+                <Chat socket={socket} />
+              </>
+            }
+          />
+          <Route
+            path="/messanger/settings"
+            element={
+              <>
+                <SidebarSettings />
+                <Settings />
+              </>
+            }
+          />
+        </Route>
+      </Routes>
+    </div>
   );
 };
 

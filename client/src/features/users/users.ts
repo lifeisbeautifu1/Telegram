@@ -3,14 +3,14 @@ import axios from 'axios';
 
 import { IUser } from '../../interfaces';
 
-export interface AuthState {
+export interface UsersState {
   loading: boolean;
   onlineUsers: IUser[];
   searchUsers: IUser[];
   selectedUsers: IUser[];
 }
 
-const initialState: AuthState = {
+const initialState: UsersState = {
   loading: false,
   onlineUsers: [],
   searchUsers: [],
