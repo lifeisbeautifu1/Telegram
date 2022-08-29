@@ -167,10 +167,22 @@ export const chatSlice = createSlice({
       .addCase(fetchChats.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchChats.fulfilled, (state, action) => {
-        state.chats = action.payload;
-        state.loading = false;
-      })
+      .addCase(
+        fetchChats.fulfilled,
+        (state, action: PayloadAction<IChat[]>) => {
+          state.chats = action.payload;
+          if (
+            state.selectedChat &&
+            action.payload.find((chat) => chat.id === state.selectedChat?.id)
+          ) {
+            //  @ts-ignore
+            state.selectedChat = action.payload.find(
+              (chat) => chat.id === state.selectedChat?.id
+            );
+          }
+          state.loading = false;
+        }
+      )
       .addCase(fetchChats.rejected, (state) => {
         state.loading = false;
       })

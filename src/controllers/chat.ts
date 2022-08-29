@@ -186,13 +186,19 @@ export const removeFromGroupChat = async (req: Request, res: Response) => {
       )
     ).rows;
     chat.users = users;
+    // console.log(chat);
+    // console.log(userId);
     if (chat.group_admin.id === userId) {
-      if (users.length) {
+      if (users.length > 0) {
         chat.group_admin = users[0];
-        await query('UPDATE chats SET group_admin = $1 WHERE id = $2;', [
-          users[0].id,
-          chatId,
-        ]);
+        // console.log(users[0]);
+        const newChat = (
+          await query('UPDATE chats SET group_admin = $1 WHERE id = $2;', [
+            users[0].id,
+            chatId,
+          ])
+        ).rows[0];
+        // console.log(newChat);
       }
     }
     res.status(StatusCodes.OK).json(chat);
