@@ -15,3 +15,5 @@ export { default as CreateChat } from './CreateChat';
 export { default as CreateChatUser } from './CreateChatUser';
 export { default as Settings } from './Settings';
 export { default as ChatInfo } from './ChatInfo';
+export { default as AddMembersModal } from './AddMembersModal';
+export { default as HandleMemberModal } from './HandleMemberModal';

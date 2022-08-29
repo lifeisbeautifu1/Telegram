@@ -3,6 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface AppState {
   isDarkMode: boolean;
   isEditProfile: boolean;
+  isAddMembers: boolean;
+  isHandleMember: boolean;
+  action: 'LEAVE' | 'ADD' | 'REMOVE' | null;
 }
 
 const initialState: AppState = {
@@ -10,6 +13,9 @@ const initialState: AppState = {
     ? JSON.parse(localStorage.getItem('isDarkMode')!)
     : false,
   isEditProfile: false,
+  isAddMembers: false,
+  isHandleMember: false,
+  action: null,
 };
 
 export const appSlice = createSlice({
@@ -23,9 +29,27 @@ export const appSlice = createSlice({
     setIsEditProfile: (state, action: PayloadAction<boolean>) => {
       state.isEditProfile = action.payload;
     },
+    setIsAddMembers: (state, action: PayloadAction<boolean>) => {
+      state.isAddMembers = action.payload;
+    },
+    setIsHandleMember: (state, action: PayloadAction<boolean>) => {
+      state.isHandleMember = action.payload;
+    },
+    setAction: (
+      state,
+      action: PayloadAction<'LEAVE' | 'ADD' | 'REMOVE' | null>
+    ) => {
+      state.action = action.payload;
+    },
   },
 });
 
-export const { toggleDarkMode, setIsEditProfile } = appSlice.actions;
+export const {
+  toggleDarkMode,
+  setIsEditProfile,
+  setIsAddMembers,
+  setIsHandleMember,
+  setAction,
+} = appSlice.actions;
 
 export default appSlice.reducer;

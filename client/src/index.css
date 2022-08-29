@@ -427,7 +427,7 @@ span.ripple {
   text-indent: -9999px;
   width: 50px;
   height: 25px;
-  background: grey;
+  background: rgb(220, 220, 220);
   display: block;
   border-radius: 100px;
   position: relative;

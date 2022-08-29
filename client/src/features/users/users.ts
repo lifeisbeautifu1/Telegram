@@ -8,6 +8,7 @@ export interface UsersState {
   onlineUsers: IUser[];
   searchUsers: IUser[];
   selectedUsers: IUser[];
+  selectedUser: IUser | null;
 }
 
 const initialState: UsersState = {
@@ -15,6 +16,7 @@ const initialState: UsersState = {
   onlineUsers: [],
   searchUsers: [],
   selectedUsers: [],
+  selectedUser: null,
 };
 
 export const searchUsers = createAsyncThunk(
@@ -48,6 +50,9 @@ export const usersSlice = createSlice({
         (u) => u.id !== action.payload.id
       );
     },
+    setSelectedUser: (state, action: PayloadAction<IUser | null>) => {
+      state.selectedUser = action.payload;
+    },
     resetSelectedUsers: (state) => {
       state.selectedUsers = [];
     },
@@ -76,6 +81,7 @@ export const {
   addSelectedUser,
   removeSelectedUser,
   resetSelectedUsers,
+  setSelectedUser,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

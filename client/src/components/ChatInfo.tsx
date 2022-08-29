@@ -2,6 +2,7 @@ import { Socket } from 'socket.io-client';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setIsChatInfo, leaveGroupChat } from '../features/chat/chat';
+import { setIsAddMembers } from '../features/app/app';
 import { Avatar, CreateChatUser } from './';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
@@ -59,7 +60,10 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
             {selectedChat?.users?.length} members
           </p>
           <div className="grid grid-cols-4  w-full gap-4">
-            <div className="rounded-lg mt-6 bg-white dark:bg-slate-600 dark:text-sky-500 text-sky-400 flex flex-col items-center justify-center py-4  cursor-pointer">
+            <div
+              className="rounded-lg mt-6 bg-white dark:bg-slate-600 dark:text-sky-500 text-sky-400 flex flex-col items-center justify-center py-4  cursor-pointer"
+              onClick={() => dispatch(setIsAddMembers(true))}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -135,7 +139,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
             <div></div>
             <div className="flex flex-col">
               {selectedChat?.users?.map((u) => (
-                <CreateChatUser noOnline onChatInfo user={u} />
+                <CreateChatUser key={u.id} noOnline onChatInfo user={u} />
               ))}
             </div>
           </div>

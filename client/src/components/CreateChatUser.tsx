@@ -1,25 +1,38 @@
 import { IUser } from '../interfaces';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Avatar } from './';
+import { setSelectedUser } from '../features/users/users';
+import { setIsHandleMember } from '../features/app/app';
 
 interface CreateChatUserProps {
   user: IUser;
   noOnline?: boolean;
   onChatInfo?: boolean;
+  onAddMembers?: boolean;
 }
 
 const CreateChatUser: React.FC<CreateChatUserProps> = ({
   user,
   noOnline,
   onChatInfo,
+  onAddMembers,
 }) => {
   const { onlineUsers } = useAppSelector((state) => state.users);
+
   const { selectedChat } = useAppSelector((state) => state.chat);
+
+  const dispatch = useAppDispatch();
   return (
     <div
       className={`w-full px-2 py-1 bg-white ${
         onChatInfo ? 'dark:bg-slate-600' : 'dark:bg-slate-500 rounded '
-      }  flex  gap-2`}
+      }  flex  gap-2 ${onAddMembers && 'cursor-pointer'}`}
+      onClick={() => {
+        if (onAddMembers) {
+          dispatch(setSelectedUser(user));
+          dispatch(setIsHandleMember(true));
+        }
+      }}
     >
       <div className="relative">
         <Avatar letter={user.username[0]} />

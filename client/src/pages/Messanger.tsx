@@ -1,7 +1,13 @@
 import { Socket } from 'socket.io-client';
 
 import { useAppSelector } from '../app/hooks';
-import { Sidebar, Chat, CreateChat } from '../components';
+import {
+  Sidebar,
+  Chat,
+  CreateChat,
+  AddMembersModal,
+  HandleMemberModal,
+} from '../components';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
 interface MessangerProps {
@@ -13,12 +19,15 @@ interface MessangerProps {
 
 const Messanger: React.FC<MessangerProps> = ({ socket }) => {
   const { createChat } = useAppSelector((state) => state.chat);
+
   return (
-    <>
+    <div className="relative flex">
       {' '}
       <Sidebar socket={socket} />
       {createChat ? <CreateChat socket={socket} /> : <Chat socket={socket} />}
-    </>
+      <AddMembersModal />
+      <HandleMemberModal />
+    </div>
   );
 };
 
