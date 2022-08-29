@@ -12,7 +12,7 @@ const MessangerLayout = () => {
             Telegram
           </h1>
         </div>
-        <div className="flex app">
+        <div className="flex app w-full">
           <Outlet />
         </div>
       </div>

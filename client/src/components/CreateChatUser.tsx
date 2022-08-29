@@ -2,7 +2,7 @@ import { IUser } from '../interfaces';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Avatar } from './';
 import { setSelectedUser } from '../features/users/users';
-import { setIsHandleMember } from '../features/app/app';
+import { setIsHandleMember, setAction } from '../features/app/app';
 
 interface CreateChatUserProps {
   user: IUser;
@@ -30,15 +30,17 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
       onClick={() => {
         if (onAddMembers) {
           dispatch(setSelectedUser(user));
+          dispatch(setAction('ADD'));
           dispatch(setIsHandleMember(true));
         }
       }}
     >
       <div className="relative">
         <Avatar letter={user.username[0]} />
-        {onlineUsers.map((user) => user.id).includes(user.id) && !noOnline && (
-          <span className="bottom-0 left-8 absolute  w-3 h-3 bg-white border-2 border-sky-400 dark:border-gray-800 rounded-full"></span>
-        )}
+        {onlineUsers.map((user) => user?.id).includes(user?.id) &&
+          !noOnline && (
+            <span className="bottom-0 left-8 absolute  w-3 h-3 bg-white border-2 border-sky-400 dark:border-gray-800 rounded-full"></span>
+          )}
       </div>
       <div
         className={`overflow-hidden w-full py-[2px] flex   h-[44px] ${
@@ -49,10 +51,10 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
       >
         <div>
           <h1 className="text-xs capitalize font-medium flex  justify-between items-center dark:text-white">
-            {user.username}{' '}
+            {user?.username}{' '}
           </h1>
           <p className={'text-xs w-full'}>
-            {onlineUsers.map((user) => user.id).includes(user.id) ? (
+            {onlineUsers.map((user) => user?.id).includes(user?.id) ? (
               <span className="text-sky-400">Online</span>
             ) : (
               <span className="text-gray-400 dark:text-gray-300">
@@ -61,7 +63,7 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
             )}
           </p>
         </div>
-        {onChatInfo && selectedChat?.group_admin.id === user.id && (
+        {onChatInfo && selectedChat?.group_admin?.id === user?.id && (
           <div className="text-xs text-gray-400 dark:text-gray-300 pt-2">
             owner
           </div>

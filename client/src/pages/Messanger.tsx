@@ -21,12 +21,12 @@ const Messanger: React.FC<MessangerProps> = ({ socket }) => {
   const { createChat } = useAppSelector((state) => state.chat);
 
   return (
-    <div className="relative flex">
+    <div className="relative flex w-full">
       {' '}
       <Sidebar socket={socket} />
       {createChat ? <CreateChat socket={socket} /> : <Chat socket={socket} />}
       <AddMembersModal />
-      <HandleMemberModal />
+      <HandleMemberModal socket={socket} />
     </div>
   );
 };

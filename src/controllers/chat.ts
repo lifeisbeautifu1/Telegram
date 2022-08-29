@@ -186,6 +186,15 @@ export const removeFromGroupChat = async (req: Request, res: Response) => {
       )
     ).rows;
     chat.users = users;
+    if (chat.group_admin.id === userId) {
+      if (users.length) {
+        chat.group_admin = users[0];
+        await query('UPDATE chats SET group_admin = $1 WHERE id = $2;', [
+          users[0].id,
+          chatId,
+        ]);
+      }
+    }
     res.status(StatusCodes.OK).json(chat);
   }
 };

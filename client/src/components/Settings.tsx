@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Avatar } from './';
-import { resetErrors, updateUsername } from '../features/auth/auth';
+import { resetErrors, updateUsername, logout } from '../features/auth/auth';
 import { setIsEditProfile, toggleDarkMode } from '../features/app/app';
 
 const Settings = () => {
@@ -169,7 +169,10 @@ const Settings = () => {
                 <div className="text-sm flex items-center justify-between w-full pb-2 border-b border-gray-200 dark:border-gray-400 cursor-pointer">
                   <h1 className="text-sky-400 ">Add account</h1>
                 </div>
-                <div className="text-sm flex items-center w-full pt-2 cursor-pointer">
+                <div
+                  className="text-sm flex items-center w-full pt-2 cursor-pointer"
+                  onClick={() => dispatch(logout())}
+                >
                   <h1 className="text-red-500 dark:text-red-400">Log out</h1>
                 </div>
               </div>

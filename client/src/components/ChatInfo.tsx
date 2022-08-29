@@ -1,8 +1,12 @@
 import { Socket } from 'socket.io-client';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { setIsChatInfo, leaveGroupChat } from '../features/chat/chat';
-import { setIsAddMembers } from '../features/app/app';
+import { setIsChatInfo } from '../features/chat/chat';
+import {
+  setAction,
+  setIsAddMembers,
+  setIsHandleMember,
+} from '../features/app/app';
 import { Avatar, CreateChatUser } from './';
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 
@@ -17,8 +21,6 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
   const dispatch = useAppDispatch();
 
   const { selectedChat } = useAppSelector((state) => state.chat);
-
-  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -48,7 +50,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
         <div className="dark:text-white translate-x-[-50%]">Info</div>
         <div className="text-sky-400 cursor-pointer">Edit</div>
       </div>
-      <div className="w-full  h-full bg-slate-100 dark:bg-slate-700  ">
+      <div className="w-full  h-full bg-slate-100 pb-12 dark:bg-slate-700 overflow-y-scroll  ">
         <div className="flex flex-col items-center w-[70%] mx-auto overflow-y-scroll">
           <div className="mt-12">
             <Avatar size="xl" letter={selectedChat?.chat_name[0]!} />
@@ -110,13 +112,8 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
             <div
               className="rounded-lg mt-6 bg-white  dark:bg-slate-600 dark:text-sky-500 text-sky-400 flex flex-col items-center justify-center py-4 cursor-pointer"
               onClick={() => {
-                dispatch(leaveGroupChat());
-                socket?.current?.emit('sendMessage', {
-                  sender: user,
-                  chat: {
-                    users: selectedChat?.users,
-                  },
-                });
+                dispatch(setAction('LEAVE'));
+                dispatch(setIsHandleMember(true));
               }}
             >
               <svg

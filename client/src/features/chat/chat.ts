@@ -123,6 +123,25 @@ export const leaveGroupChat = createAsyncThunk(
   }
 );
 
+
+export const addToGroupChat = createAsyncThunk(
+  'auth/addToGroupChat',
+  async (_, thunkAPI: any) => {
+    try {
+      const chatId = thunkAPI.getState().chat.selectedChat.id;
+      const userId = thunkAPI.getState().users.selectedUser.id;
+      const { data } = await axios.patch('/chat/group/add', {
+        userId,
+        chatId,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue('error');
+    }
+  }
+);
+
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -232,6 +251,19 @@ export const chatSlice = createSlice({
         }
       )
       .addCase(leaveGroupChat.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(addToGroupChat.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        addToGroupChat.fulfilled,
+        (state, action: PayloadAction<IChat>) => {
+          state.selectedChat = action.payload;
+          state.loading = false;
+        }
+      )
+      .addCase(addToGroupChat.rejected, (state) => {
         state.loading = false;
       });
   },
