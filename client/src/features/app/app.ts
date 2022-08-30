@@ -4,6 +4,7 @@ export interface AppState {
   isDarkMode: boolean;
   isEditProfile: boolean;
   isAddMembers: boolean;
+  isEditGroupChat: boolean;
   isHandleMember: boolean;
   action: 'LEAVE' | 'ADD' | 'REMOVE' | null;
 }
@@ -15,6 +16,7 @@ const initialState: AppState = {
   isEditProfile: false,
   isAddMembers: false,
   isHandleMember: false,
+  isEditGroupChat: false,
   action: null,
 };
 
@@ -35,6 +37,9 @@ export const appSlice = createSlice({
     setIsHandleMember: (state, action: PayloadAction<boolean>) => {
       state.isHandleMember = action.payload;
     },
+    setIsEditGroupChat: (state, action: PayloadAction<boolean>) => {
+      state.isEditGroupChat = action.payload;
+    },
     setAction: (
       state,
       action: PayloadAction<'LEAVE' | 'ADD' | 'REMOVE' | null>
@@ -49,6 +54,7 @@ export const {
   setIsEditProfile,
   setIsAddMembers,
   setIsHandleMember,
+  setIsEditGroupChat,
   setAction,
 } = appSlice.actions;
 

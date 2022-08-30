@@ -13,6 +13,7 @@ import {
 import { formatDistanceToNow } from 'date-fns';
 import { Socket } from 'socket.io-client';
 import { Avatar } from './';
+import { setIsEditGroupChat } from '../features/app/app';
 
 interface SidebarChatProps {
   chat: IChat;
@@ -45,6 +46,7 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
         dispatch(setSelectedChat(chat));
         dispatch(setCreateChat(false));
         dispatch(setIsChatInfo(false));
+        dispatch(setIsEditGroupChat(false));
         socket?.current?.emit('joinChat', chat.id);
       }}
     >

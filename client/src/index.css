@@ -453,3 +453,7 @@ span.ripple {
   left: calc(100% - 5px);
   transform: translateX(-100%);
 }
+
+.img {
+  filter: brightness(0) invert(1)
+}

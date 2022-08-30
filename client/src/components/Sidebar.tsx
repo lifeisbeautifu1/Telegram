@@ -13,6 +13,7 @@ import {
 } from '../features/chat/chat';
 import { SidebarChat } from './';
 import { getSenderFull } from '../utils/chat';
+import { setIsEditGroupChat } from '../features/app/app';
 
 interface SidebarProps {
   socket: React.MutableRefObject<Socket<
@@ -92,7 +93,10 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
 
       <div className="mt-auto flex items-center justify-evenly py-3 border-t border-gray-200 dark:border-gray-500">
         <Link
-          onClick={() => dispatch(setIsChatInfo(false))}
+          onClick={() => {
+            dispatch(setIsChatInfo(false));
+            dispatch(setIsEditGroupChat(false));
+          }}
           to="/messanger/contacts"
           className={pathname === '/messanger/contacts' ? 'active' : ''}
         >
@@ -139,7 +143,10 @@ const Sidebar: React.FC<SidebarProps> = ({ socket }) => {
         </Link>
         <Link
           to="/messanger/settings"
-          onClick={() => dispatch(setIsChatInfo(false))}
+          onClick={() => {
+            dispatch(setIsChatInfo(false));
+            dispatch(setIsEditGroupChat(false));
+          }}
           className={pathname === '/messanger/settings' ? 'active' : ''}
         >
           <svg

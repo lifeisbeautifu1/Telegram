@@ -17,3 +17,4 @@ export { default as Settings } from './Settings';
 export { default as ChatInfo } from './ChatInfo';
 export { default as AddMembersModal } from './AddMembersModal';
 export { default as HandleMemberModal } from './HandleMemberModal';
+export { default as EditGroupChat } from './EditGroupChat';
