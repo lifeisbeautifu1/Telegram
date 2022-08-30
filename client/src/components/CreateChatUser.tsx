@@ -19,6 +19,8 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
 }) => {
   const { onlineUsers } = useAppSelector((state) => state.users);
 
+  const { user: currentUser } = useAppSelector((state) => state.auth);
+
   const { selectedChat } = useAppSelector((state) => state.chat);
 
   const dispatch = useAppDispatch();
@@ -63,10 +65,37 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
             )}
           </p>
         </div>
-        {onChatInfo && selectedChat?.group_admin?.id === user?.id && (
+        {onChatInfo && selectedChat?.group_admin?.id === user?.id ? (
           <div className="text-xs text-gray-400 dark:text-gray-300 pt-2">
             owner
           </div>
+        ) : (
+          onChatInfo &&
+          selectedChat?.group_admin?.id === currentUser?.id && (
+            <div
+              className="text-red-500 cursor-pointer pt-2"
+              onClick={() => {
+                dispatch(setSelectedUser(user));
+                dispatch(setAction('REMOVE'));
+                dispatch(setIsHandleMember(true));
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+          )
         )}
       </div>
     </div>

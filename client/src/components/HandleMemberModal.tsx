@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setIsHandleMember } from '../features/app/app';
 import {
   addToGroupChat,
+  removeFromGroupChat,
   sendMessage,
   leaveGroupChat,
 } from '../features/chat/chat';
@@ -68,6 +69,25 @@ const HandleMemberModal: React.FC<HandleMemberModalProps> = ({ socket }) => {
     dispatch(setIsHandleMember(false));
   };
 
+  const handleRemoveUser = () => {
+    dispatch(
+      sendMessage({
+        chatId: selectedChat?.id!,
+        content: `Removed ${selectedUser?.username} from chat.`,
+      })
+    );
+    dispatch(removeFromGroupChat());
+    socket?.current?.emit('sendMessage', {
+      sender: user,
+      chat: {
+        users: selectedChat?.users,
+      },
+    });
+    socket?.current?.emit('refetchChats', selectedUser?.id!);
+    dispatch(setSelectedUser(null));
+    dispatch(setIsHandleMember(false));
+  };
+
   return (
     <div
       className={`absolute z-10 inset-0 bg-black/50 flex items-center justify-center transition duration-300 ${
@@ -94,6 +114,8 @@ const HandleMemberModal: React.FC<HandleMemberModalProps> = ({ socket }) => {
         <p className="mt-2 text-xs dark:text-gray-200">
           {action === 'ADD' ? (
             <span>Add {selectedUser?.username} to chat?</span>
+          ) : action === 'REMOVE' ? (
+            <span>Sure to remove {selectedUser?.username} from chat?</span>
           ) : (
             <span>Sure to leave the chat?</span>
           )}
@@ -110,7 +132,13 @@ const HandleMemberModal: React.FC<HandleMemberModalProps> = ({ socket }) => {
           </button>
           <button
             className="text-xs text-white  bg-blue-500 border-blue-500 w-full py-1 px-4  rounded shadow"
-            onClick={() => (action === 'ADD' ? handleAddUser() : handleLeave())}
+            onClick={() =>
+              action === 'ADD'
+                ? handleAddUser()
+                : action === 'REMOVE'
+                ? handleRemoveUser()
+                : handleLeave()
+            }
           >
             {action === 'ADD'
               ? 'Add'

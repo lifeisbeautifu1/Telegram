@@ -143,6 +143,24 @@ export const addToGroupChat = createAsyncThunk(
   }
 );
 
+export const removeFromGroupChat = createAsyncThunk(
+  'auth/removeFromGroupChat',
+  async (_, thunkAPI: any) => {
+    try {
+      const chatId = thunkAPI.getState().chat.selectedChat.id;
+      const userId = thunkAPI.getState().users.selectedUser.id;
+      const { data } = await axios.patch('/chat/group/remove', {
+        userId,
+        chatId,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue('error');
+    }
+  }
+);
+
 export const renameGroupChat = createAsyncThunk(
   'auth/renameGroupChat',
   async (_, thunkAPI: any) => {
@@ -313,6 +331,19 @@ export const chatSlice = createSlice({
         }
       )
       .addCase(renameGroupChat.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(removeFromGroupChat.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        removeFromGroupChat.fulfilled,
+        (state, action: PayloadAction<IChat>) => {
+          state.selectedChat = action.payload;
+          state.loading = false;
+        }
+      )
+      .addCase(removeFromGroupChat.rejected, (state) => {
         state.loading = false;
       });
   },
