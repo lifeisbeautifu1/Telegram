@@ -12,7 +12,7 @@ export const accessChat = async (req: Request, res: Response) => {
 
   let chat = (
     await query(
-      'SELECT id, COUNT(*) ,chat_name, is_group_chat, created_at, latest_message FROM chats INNER JOIN (SELECT * FROM chat_user WHERE user_id IN ($1, $2)) chat_user ON chats.id = chat_user.chat_id WHERE chats.is_group_chat = false GROUP BY id ORDER BY COUNT(*) DESC LIMIT 1;',
+      'SELECT id, COUNT(*) ,chat_name, is_group_chat, created_at, image_url, latest_message FROM chats INNER JOIN (SELECT * FROM chat_user WHERE user_id IN ($1, $2)) chat_user ON chats.id = chat_user.chat_id WHERE chats.is_group_chat = false GROUP BY id ORDER BY COUNT(*) DESC LIMIT 1;',
       [res.locals.user.id, userId]
     )
   ).rows[0];
@@ -70,7 +70,7 @@ export const accessChat = async (req: Request, res: Response) => {
 export const fetchChats = async (req: Request, res: Response) => {
   let chats = (
     await query(
-      'SELECT id, chat_name, is_group_chat, group_admin, latest_message FROM chats INNER JOIN (SELECT * FROM chat_user WHERE user_id = $1) chat_user ON chats.id = chat_user.chat_id',
+      'SELECT id, chat_name, is_group_chat, group_admin, image_url, latest_message FROM chats INNER JOIN (SELECT * FROM chat_user WHERE user_id = $1) chat_user ON chats.id = chat_user.chat_id',
       [res.locals.user.id]
     )
   ).rows;
@@ -169,7 +169,7 @@ export const removeFromGroupChat = async (req: Request, res: Response) => {
   } else {
     const chat = (
       await query(
-        'SELECT id, chat_name, is_group_chat, group_admin FROM chats WHERE id = $1;',
+        'SELECT id, chat_name, is_group_chat, image_url, group_admin FROM chats WHERE id = $1;',
         [chatId]
       )
     ).rows[0];
@@ -215,7 +215,7 @@ export const addToGroupChat = async (req: Request, res: Response) => {
 
   const chat = (
     await query(
-      'SELECT id, chat_name, is_group_chat, group_admin FROM chats WHERE id = $1;',
+      'SELECT id, chat_name, is_group_chat,image_url, group_admin FROM chats WHERE id = $1;',
       [chatId]
     )
   ).rows[0];

@@ -96,6 +96,14 @@ export const createGroupChat = createAsyncThunk(
         name,
         users: JSON.stringify(users),
       });
+
+      thunkAPI.dispatch(
+        sendMessage({
+          chatId: data.id,
+          content: 'Created group chat',
+        })
+      );
+      
       return data;
     } catch (error: any) {
       console.log(error);

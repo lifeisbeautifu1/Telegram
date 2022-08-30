@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { FaCamera } from 'react-icons/fa';
 import { RiShieldStarFill } from 'react-icons/ri';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
@@ -10,6 +11,8 @@ const EditGroupChat = () => {
 
   const dispatch = useAppDispatch();
 
+  const imageUploadRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     dispatch(setNewChatName(selectedChat?.chat_name!));
   }, [selectedChat, dispatch]);
@@ -18,7 +21,28 @@ const EditGroupChat = () => {
     <div className="w-full  h-full bg-slate-100 pb-12 dark:bg-slate-700 overflow-y-scroll">
       <div className="w-3/5 mx-auto h-full flex flex-col">
         <div className="bg-white dark:bg-slate-600 rounded-lg flex flex-col items-center p-4 mt-8">
-          <Avatar size="xl" letter={selectedChat?.chat_name[0]!} image_url={selectedChat?.image_url} />
+          <div className="relative">
+            <Avatar
+              size="xl"
+              letter={selectedChat?.chat_name[0]!}
+              image_url={selectedChat?.image_url}
+            />
+            <div
+              onClick={() => imageUploadRef?.current?.click()}
+              className="absolute z-10 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] cursor-pointer text-2xl text-white"
+            >
+              <FaCamera />
+            </div>
+            <div className="absolute inset-0 bg-black/30 rounded-full"></div>
+            <input
+              type="file"
+              className="hidden"
+              accept=".png,.jpeg,.jpg"
+              ref={imageUploadRef}
+              // @ts-ignore
+              onChange={(e) => handleImageChange(e)}
+            />
+          </div>
           <hr className="my-3 w-full dark:border-gray-500" />
           <input
             type="text"
