@@ -1,8 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
+import { FaCamera } from 'react-icons/fa';
+import axios from 'axios';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Avatar } from './';
-import { resetErrors, updateUsername, logout } from '../features/auth/auth';
+import {
+  resetErrors,
+  updateUsername,
+  logout,
+  updateImage,
+} from '../features/auth/auth';
 import { setIsEditProfile, toggleDarkMode } from '../features/app/app';
 
 const Settings = () => {
@@ -14,6 +21,8 @@ const Settings = () => {
 
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
+  const imageUploadRef = useRef<HTMLInputElement>(null);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,6 +30,34 @@ const Settings = () => {
     setUsername(user?.username || '');
     dispatch(resetErrors());
   }, [isEditProfile, user?.username, dispatch]);
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // @ts-ignore
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        if (user?.image_url) {
+          const id = user?.image_url?.split('/')?.at(-1)?.split('.')[0];
+          await axios.delete('/upload/' + id);
+        }
+        const { data: imageData } = await axios.post('/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        const url = imageData.secure_url;
+        try {
+          dispatch(updateImage(url));
+        } catch (error) {
+          console.log(error);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <>
@@ -66,11 +103,28 @@ const Settings = () => {
           <div className="bg-gray-200/50 dark:bg-slate-600 h-full">
             <div className="flex flex-col items-center w-3/5 mx-auto mt-10">
               <div className="bg-white dark:bg-slate-500 px-4 py-2 rounded-lg w-full flex items-center">
-                <Avatar
-                  letter={user?.username[0]!}
-                  size="lg"
-                  image_url={user?.image_url}
-                />
+                <div className="relative">
+                  <Avatar
+                    letter={user?.username[0]!}
+                    size="lg"
+                    image_url={user?.image_url}
+                  />
+                  <div
+                    onClick={() => imageUploadRef?.current?.click()}
+                    className="absolute z-10 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] cursor-pointer text-[18px] text-white"
+                  >
+                    <FaCamera />
+                  </div>
+                  <div className="absolute inset-0 bg-black/30 rounded-full"></div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept=".png,.jpeg,.jpg"
+                    ref={imageUploadRef}
+                    // @ts-ignore
+                    onChange={(e) => handleImageChange(e)}
+                  />
+                </div>
                 <div className={`ml-2 w-4/5  flex flex-col items-center `}>
                   <input
                     type="text"

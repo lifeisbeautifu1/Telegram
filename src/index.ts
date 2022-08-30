@@ -10,7 +10,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import rateLimiter from 'express-rate-limit';
+// import rateLimiter from 'express-rate-limit';
 
 import errorHandler from './middleware/error';
 import auth from './middleware/auth';
@@ -20,6 +20,7 @@ import authRouter from './routes/auth';
 import chatRouter from './routes/chat';
 import userRouter from './routes/user';
 import messageRouter from './routes/message';
+import uploadRouter from './routes/upload';
 
 import { users, addUser, getUser, removeUser } from './utils/users';
 
@@ -59,6 +60,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/chat', auth, chatRouter);
 app.use('/api/user', auth, userRouter);
 app.use('/api/message', auth, messageRouter);
+app.use('/api/upload', auth, uploadRouter);
 
 app.use(errorHandler);
 app.use(notFound);

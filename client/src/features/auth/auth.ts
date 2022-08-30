@@ -75,6 +75,21 @@ export const updateUsername = createAsyncThunk(
   }
 );
 
+export const updateImage = createAsyncThunk(
+  'auth/updateImage',
+  async (image: string, thunkAPI) => {
+    try {
+      const { data } = await axios.post('/user/image', {
+        image_url: image,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error?.response?.data?.errors);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -140,6 +155,18 @@ export const authSlice = createSlice({
         state.errors = null;
       })
       .addCase(updateUsername.rejected, (state, action: any) => {
+        state.errors = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateImage.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateImage.fulfilled, (state, action: any) => {
+        state.user = action.payload;
+        state.loading = false;
+        state.errors = null;
+      })
+      .addCase(updateImage.rejected, (state, action: any) => {
         state.errors = action.payload;
         state.loading = false;
       });

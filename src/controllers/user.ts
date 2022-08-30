@@ -49,3 +49,15 @@ export const updateUsername = async (req: Request, res: Response) => {
     return res.status(StatusCodes.OK).json(updatedUser);
   }
 };
+
+export const updateImage = async (req: Request, res: Response) => {
+  const { image_url } = req.body;
+  const updatedUser = (
+    await query('UPDATE users SET image_url = $1 WHERE id = $2 RETURNING *;', [
+      image_url,
+      res.locals.user.id,
+    ])
+  ).rows[0];
+
+  return res.status(StatusCodes.OK).json(updatedUser);
+};

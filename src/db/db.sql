@@ -14,6 +14,7 @@ CREATE table chats (
 	is_group_chat BOOLEAN DEFAULT false,
 	latest_message UUID,
 	group_admin UUID,
+	image_url text DEFAULT '',
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	FOREIGN KEY (group_admin) REFERENCES users(id)
