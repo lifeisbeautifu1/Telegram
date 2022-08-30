@@ -269,3 +269,53 @@ export const renameGroupChat = async (req: Request, res: Response) => {
     res.status(StatusCodes.OK).json(chat);
   }
 };
+
+
+
+export const updateGroupChatImage = async (req: Request, res: Response) => {
+  const { image_url } = req.body;
+  const { id } = req.params;
+
+  const chat = (
+    await query('UPDATE chats SET image_url = $1 WHERE id = $2 RETURNING *', [
+      image_url,
+      id,
+    ])
+  ).rows[0];
+
+  if (!chat) {
+    throw new NotFoundError(`Chat with id ${id} not found!`);
+  } else {
+    if (chat.latest_message) {
+      const message = (
+        await query('SELECT * FROM messages WHERE id = $1;', [
+          chat.latest_message,
+        ])
+      ).rows[0];
+      const sender = (
+        await query(
+          'SELECT id, username, image_url FROM users WHERE id = $1;',
+          [message.sender]
+        )
+      ).rows[0];
+      message.sender = sender;
+      chat.latest_message = message;
+    }
+    const groupAdmin = (
+      await query('SELECT id, username, image_url FROM users WHERE id = $1;', [
+        chat.group_admin,
+      ])
+    ).rows[0];
+
+    chat.group_admin = groupAdmin;
+
+    const users = (
+      await query(
+        'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+        [chat.id]
+      )
+    ).rows;
+    chat.users = users;
+    res.status(StatusCodes.OK).json(chat);
+  }
+};

@@ -187,6 +187,23 @@ export const renameGroupChat = createAsyncThunk(
   }
 );
 
+export const updateImage = createAsyncThunk(
+  'auth/updateImage',
+  async (image: string, thunkAPI) => {
+    try {
+      // @ts-ignore
+      const id = thunkAPI.getState().chat.selectedChat.id;
+      const { data } = await axios.patch('/chat/group/image/' + id, {
+        image_url: image,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error?.response?.data?.errors);
+    }
+  }
+);
+
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
@@ -352,6 +369,18 @@ export const chatSlice = createSlice({
         }
       )
       .addCase(removeFromGroupChat.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateImage.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateImage.fulfilled, (state, action: PayloadAction<IChat>) => {
+        state.selectedChat = action.payload;
+        state.chats = state.chats.map((chat) => {
+          return chat.id === action.payload.id ? action.payload : chat;
+        });
+      })
+      .addCase(updateImage.rejected, (state) => {
         state.loading = false;
       });
   },

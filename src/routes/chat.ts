@@ -9,6 +9,7 @@ import {
   removeFromGroupChat,
   addToGroupChat,
   renameGroupChat,
+  updateGroupChatImage,
 } from '../controllers/chat';
 
 router.get('/', fetchChats);
@@ -22,5 +23,7 @@ router.patch('/rename', renameGroupChat);
 router.patch('/group/remove', removeFromGroupChat);
 
 router.patch('/group/add', addToGroupChat);
+
+router.patch('/group/image/:id', updateGroupChatImage);
 
 export default router;

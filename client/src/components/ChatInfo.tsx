@@ -85,7 +85,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
         </div>
       </div>
       {isEditGroupChat ? (
-        <EditGroupChat />
+        <EditGroupChat socket={socket} />
       ) : (
         <div className="w-full  h-full bg-slate-100 pb-12 dark:bg-slate-700 overflow-y-scroll  ">
           <div className="flex flex-col items-center w-[70%] mx-auto overflow-y-scroll">
