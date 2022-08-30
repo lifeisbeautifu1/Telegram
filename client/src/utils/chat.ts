@@ -7,6 +7,7 @@ export const getSender = (loggedUser: IUser, users: IUser[]) => {
 };
 
 export const getSenderFull = (loggedUser: IUser, users: IUser[]) => {
+  console.log(users);
   return users[0]?.id === loggedUser?.id ? users[1] : users[0];
 };
 

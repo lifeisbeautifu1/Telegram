@@ -61,7 +61,7 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
       }}
     >
       <div className="relative">
-        <Avatar letter={user.username[0]} />
+        <Avatar letter={user.username[0]} image_url={user?.image_url} />
         {onlineUsers.map((user) => user.id).includes(user.id) && (
           <span className="bottom-0 left-8 absolute  w-3 h-3 bg-white border-2 border-sky-400 dark:border-gray-800 rounded-full"></span>
         )}

@@ -21,6 +21,8 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
 
   const { user: currentUser } = useAppSelector((state) => state.auth);
 
+  const { isAddMembers } = useAppSelector((state) => state.app);
+
   const { selectedChat } = useAppSelector((state) => state.chat);
 
   const dispatch = useAppDispatch();
@@ -38,7 +40,7 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
       }}
     >
       <div className="relative">
-        <Avatar letter={user.username[0]} />
+        <Avatar letter={user.username[0]} image_url={user?.image_url} />
         {onlineUsers.map((user) => user?.id).includes(user?.id) &&
           !noOnline && (
             <span className="bottom-0 left-8 absolute  w-3 h-3 bg-white border-2 border-sky-400 dark:border-gray-800 rounded-full"></span>
@@ -71,6 +73,7 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
           </div>
         ) : (
           onChatInfo &&
+          !isAddMembers &&
           selectedChat?.group_admin?.id === currentUser?.id && (
             <div
               className="text-red-500 cursor-pointer pt-2"

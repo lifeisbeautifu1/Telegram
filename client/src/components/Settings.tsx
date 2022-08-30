@@ -66,7 +66,11 @@ const Settings = () => {
           <div className="bg-gray-200/50 dark:bg-slate-600 h-full">
             <div className="flex flex-col items-center w-3/5 mx-auto mt-10">
               <div className="bg-white dark:bg-slate-500 px-4 py-2 rounded-lg w-full flex items-center">
-                <Avatar letter={user?.username[0]!} size="lg" />
+                <Avatar
+                  letter={user?.username[0]!}
+                  size="lg"
+                  image_url={user?.image_url}
+                />
                 <div className={`ml-2 w-4/5  flex flex-col items-center `}>
                   <input
                     type="text"

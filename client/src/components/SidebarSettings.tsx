@@ -43,7 +43,11 @@ const SidebarSettings = () => {
           }`}
           onClick={() => dispatch(setIsEditProfile(!isEditProfile))}
         >
-          <Avatar size="lg" letter={user?.username[0] || 'U'} />
+          <Avatar
+            size="lg"
+            letter={user?.username[0] || 'U'}
+            image_url={user?.image_url}
+          />
           <div className="flex flex-col  text-xs ">
             <h1 className="capitalize font-semibold dark:text-white">
               {user?.username}

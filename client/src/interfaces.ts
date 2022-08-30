@@ -25,6 +25,7 @@ export interface IChat {
   group_admin: IUser;
   is_group_chat: boolean;
   latest_message: IMessage;
+  image_url: string;
   users: IUser[];
 }
 

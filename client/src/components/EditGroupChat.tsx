@@ -18,7 +18,7 @@ const EditGroupChat = () => {
     <div className="w-full  h-full bg-slate-100 pb-12 dark:bg-slate-700 overflow-y-scroll">
       <div className="w-3/5 mx-auto h-full flex flex-col">
         <div className="bg-white dark:bg-slate-600 rounded-lg flex flex-col items-center p-4 mt-8">
-          <Avatar size="xl" letter={selectedChat?.chat_name[0]!} />
+          <Avatar size="xl" letter={selectedChat?.chat_name[0]!} image_url={selectedChat?.image_url} />
           <hr className="my-3 w-full dark:border-gray-500" />
           <input
             type="text"

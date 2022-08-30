@@ -457,3 +457,6 @@ span.ripple {
 .img {
   filter: brightness(0) invert(1)
 }
+.w-custom {
+  width: calc(100% - 44px)
+}
