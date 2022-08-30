@@ -1,21 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { RiShieldStarFill } from 'react-icons/ri';
 
 import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { setNewChatName } from '../features/chat/chat';
 import { Avatar } from './';
 
 const EditGroupChat = () => {
-  const [chatName, setChatName] = useState('');
+  const { selectedChat, newChatName } = useAppSelector((state) => state.chat);
 
   const dispatch = useAppDispatch();
 
-  const { selectedChat } = useAppSelector((state) => state.chat);
-
   useEffect(() => {
-    if (selectedChat?.chat_name) {
-      setChatName(selectedChat?.chat_name);
-    }
-  }, [selectedChat?.chat_name, dispatch]);
+    dispatch(setNewChatName(selectedChat?.chat_name!));
+  }, [selectedChat, dispatch]);
 
   return (
     <div className="w-full  h-full bg-slate-100 pb-12 dark:bg-slate-700 overflow-y-scroll">
@@ -26,8 +23,8 @@ const EditGroupChat = () => {
           <input
             type="text"
             className="w-full text-xs bg-transparent outline-none text-gray-700 dark:text-white"
-            value={chatName}
-            onChange={(e) => setChatName(e.target.value)}
+            value={newChatName}
+            onChange={(e) => dispatch(setNewChatName(e.target.value))}
           />
           <hr className="w-full my-3 dark:border-gray-500" />
           <input

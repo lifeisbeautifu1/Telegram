@@ -69,10 +69,10 @@ const SidebarChat: React.FC<SidebarChatProps> = ({ chat, socket }) => {
       </div>
 
       <div className="overflow-hidden w-full py-[2px]">
-        <h1 className="text-xs capitalize font-medium flex  justify-between items-center">
-          <span className="box w-[30%] dark:text-white">{chatName}</span>
+        <h1 className="text-xs capitalize font-medium flex  items-center">
+          <span className="box w-[35%] dark:text-white">{chatName}</span>
           <span
-            className={`text-[10px] ${
+            className={`text-[10px] w-[65%] flex justify-end ${
               selectedChat?.id === chat.id
                 ? 'text-white dark:text-gray-300'
                 : 'text-gray-400'

@@ -1,7 +1,11 @@
 import { Socket } from 'socket.io-client';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { setIsChatInfo } from '../features/chat/chat';
+import {
+  renameGroupChat,
+  sendMessage,
+  setIsChatInfo,
+} from '../features/chat/chat';
 import {
   setAction,
   setIsAddMembers,
@@ -23,7 +27,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
 
   const { isEditGroupChat } = useAppSelector((state) => state.app);
 
-  const { selectedChat } = useAppSelector((state) => state.chat);
+  const { selectedChat, newChatName } = useAppSelector((state) => state.chat);
 
   const { user } = useAppSelector((state) => state.auth);
 
@@ -58,6 +62,19 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ socket }) => {
           className="text-sky-400 cursor-pointer"
           onClick={() => {
             if (isEditGroupChat) {
+              dispatch(renameGroupChat());
+              socket?.current?.emit('sendMessage', {
+                sender: user,
+                chat: {
+                  users: selectedChat?.users,
+                },
+              });
+              dispatch(
+                sendMessage({
+                  content: `Renamed group chat to ${newChatName}.`,
+                  chatId: selectedChat?.id!,
+                })
+              );
             } else {
               if (selectedChat?.group_admin?.id === user?.id)
                 dispatch(setIsEditGroupChat(true));

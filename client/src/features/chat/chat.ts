@@ -13,6 +13,7 @@ export interface ChatState {
   createChat: boolean;
   createChatName: boolean;
   isChatInfo: boolean;
+  newChatName: string;
 }
 
 const initialState: ChatState = {
@@ -24,6 +25,7 @@ const initialState: ChatState = {
   createChat: false,
   createChatName: false,
   isChatInfo: false,
+  newChatName: '',
 };
 
 export const fetchChats = createAsyncThunk(
@@ -123,7 +125,6 @@ export const leaveGroupChat = createAsyncThunk(
   }
 );
 
-
 export const addToGroupChat = createAsyncThunk(
   'auth/addToGroupChat',
   async (_, thunkAPI: any) => {
@@ -132,6 +133,24 @@ export const addToGroupChat = createAsyncThunk(
       const userId = thunkAPI.getState().users.selectedUser.id;
       const { data } = await axios.patch('/chat/group/add', {
         userId,
+        chatId,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue('error');
+    }
+  }
+);
+
+export const renameGroupChat = createAsyncThunk(
+  'auth/renameGroupChat',
+  async (_, thunkAPI: any) => {
+    try {
+      const chatName = thunkAPI.getState().chat.newChatName;
+      const chatId = thunkAPI.getState().chat.selectedChat.id;
+      const { data } = await axios.patch('/chat/rename', {
+        chatName,
         chatId,
       });
       return data;
@@ -160,6 +179,9 @@ export const chatSlice = createSlice({
     },
     setIsChatInfo: (state, action: PayloadAction<boolean>) => {
       state.isChatInfo = action.payload;
+    },
+    setNewChatName: (state, action: PayloadAction<string>) => {
+      state.newChatName = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -277,6 +299,21 @@ export const chatSlice = createSlice({
       )
       .addCase(addToGroupChat.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(renameGroupChat.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        renameGroupChat.fulfilled,
+        (state, action: PayloadAction<IChat>) => {
+          state.selectedChat = action.payload;
+          state.chats = state.chats.map((chat) => {
+            return chat.id === action.payload.id ? action.payload : chat;
+          });
+        }
+      )
+      .addCase(renameGroupChat.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
@@ -287,6 +324,7 @@ export const {
   setSelectedChat,
   setCreateChatName,
   setIsChatInfo,
+  setNewChatName,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;
