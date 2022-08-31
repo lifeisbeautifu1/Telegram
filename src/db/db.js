@@ -1,7 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.query = void 0;
-const pg_1 = require("pg");
+var pg_1 = require("pg");
 // const devConfig = {
 //   user: process.env.PG_USER!,
 //   password: process.env.PG_PASSWORD!,
@@ -9,13 +9,13 @@ const pg_1 = require("pg");
 //   database: process.env.PG_DATABASE!,
 //   port: +process.env.PG_PORT!,
 // };
-const devConfig = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
-const proConfig = process.env.DATABASE_URL;
-const pool = new pg_1.Pool({
+var devConfig = "postgresql://".concat(process.env.PG_USER, ":").concat(process.env.PG_PASSWORD, "@").concat(process.env.PG_HOST, ":").concat(process.env.PG_PORT, "/").concat(process.env.PG_DATABASE);
+var proConfig = process.env.DATABASE_URL;
+var pool = new pg_1.Pool({
     connectionString: process.env.NODE_ENV === 'production' ? proConfig : devConfig,
     ssl: {
-        rejectUnauthorized: false,
-    },
+        rejectUnauthorized: false
+    }
 });
-const query = (text, vars) => pool.query(text, vars);
+var query = function (text, vars) { return pool.query(text, vars); };
 exports.query = query;

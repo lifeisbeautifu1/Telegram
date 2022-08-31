@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 
 import 'express-async-errors';
@@ -38,6 +38,27 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(function (req: Request, res: Response, next: NextFunction) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Methods',
+    'POST, GET, OPTIONS, DELETE, PUT, PATCH'
+  );
+  res.header(
+    'Content-Security-Policy',
+    'default-src *; connect-src *; script-src *; object-src *;'
+  );
+  res.header(
+    'X-Content-Security-Policy',
+    'default-src *; connect-src *; script-src *; object-src *'
+  );
+  res.header(
+    'X-Webkit-CSP',
+    "default-src *; connect-src *; script-src 'unsafe-inline' 'unsafe-eval' *; object-src *;"
+  );
+});
+
 
 if ((process.env.NODE_ENV as string) === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));

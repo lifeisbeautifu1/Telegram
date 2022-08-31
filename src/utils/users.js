@@ -1,17 +1,17 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.getUser = exports.removeUser = exports.addUser = exports.users = void 0;
 exports.users = [];
-const addUser = (userId, socketId) => {
-    !exports.users.some((user) => user.userId === userId) &&
-        exports.users.push({ userId, socketId });
+var addUser = function (userId, socketId) {
+    !exports.users.some(function (user) { return user.userId === userId; }) &&
+        exports.users.push({ userId: userId, socketId: socketId });
 };
 exports.addUser = addUser;
-const removeUser = (socketId) => {
-    exports.users = exports.users.filter((user) => user.socketId !== socketId);
+var removeUser = function (socketId) {
+    exports.users = exports.users.filter(function (user) { return user.socketId !== socketId; });
 };
 exports.removeUser = removeUser;
-const getUser = (userId) => {
-    return exports.users.find((user) => user.userId === userId);
+var getUser = function (userId) {
+    return exports.users.find(function (user) { return user.userId === userId; });
 };
 exports.getUser = getUser;
