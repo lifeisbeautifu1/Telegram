@@ -8,7 +8,7 @@ export const search = async (req: Request, res: Response) => {
   const search: any = req.query.search || '';
   const users = (
     await query(
-      'SELECT id, username, image_url FROM users WHERE LOWER(username) LIKE $1 AND username != $2',
+      'SELECT id, username, image_url, last_online FROM users WHERE LOWER(username) LIKE $1 AND username != $2',
       ['%' + search.toLowerCase().trim() + '%', res.locals.user.username]
     )
   ).rows;
@@ -57,6 +57,18 @@ export const updateImage = async (req: Request, res: Response) => {
       image_url,
       res.locals.user.id,
     ])
+  ).rows[0];
+
+  return res.status(StatusCodes.OK).json(updatedUser);
+};
+
+export const updateOnline = async (req: Request, res: Response) => {
+  const { time } = req.body;
+  const updatedUser = (
+    await query(
+      'UPDATE users SET last_online = $1 WHERE id = $2 RETURNING *;',
+      [time, res.locals.user.id]
+    )
   ).rows[0];
 
   return res.status(StatusCodes.OK).json(updatedUser);

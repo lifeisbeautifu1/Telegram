@@ -64,7 +64,7 @@ export const updateUsername = createAsyncThunk(
   'auth/updateUsername',
   async (username: string, thunkAPI) => {
     try {
-      const { data } = await axios.post('/user/username', {
+      const { data } = await axios.patch('/user/username', {
         username,
       });
       return data;
@@ -75,12 +75,27 @@ export const updateUsername = createAsyncThunk(
   }
 );
 
-export const updateImage = createAsyncThunk(
-  'auth/updateImage',
+export const updateAvatar = createAsyncThunk(
+  'auth/updateAvatar',
   async (image: string, thunkAPI) => {
     try {
-      const { data } = await axios.post('/user/image', {
+      const { data } = await axios.patch('/user/image', {
         image_url: image,
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error?.response?.data?.errors);
+    }
+  }
+);
+
+export const updateOnline = createAsyncThunk(
+  'auth/updateOnline',
+  async (time: number, thunkAPI) => {
+    try {
+      const { data } = await axios.patch('/user/online', {
+        time,
       });
       return data;
     } catch (error: any) {
@@ -158,15 +173,27 @@ export const authSlice = createSlice({
         state.errors = action.payload;
         state.loading = false;
       })
-      .addCase(updateImage.pending, (state) => {
+      .addCase(updateAvatar.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateImage.fulfilled, (state, action: any) => {
+      .addCase(updateAvatar.fulfilled, (state, action: any) => {
         state.user = action.payload;
         state.loading = false;
         state.errors = null;
       })
-      .addCase(updateImage.rejected, (state, action: any) => {
+      .addCase(updateAvatar.rejected, (state, action: any) => {
+        state.errors = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateOnline.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateOnline.fulfilled, (state, action: any) => {
+        state.user = action.payload;
+        state.loading = false;
+        state.errors = null;
+      })
+      .addCase(updateOnline.rejected, (state, action: any) => {
         state.errors = action.payload;
         state.loading = false;
       });

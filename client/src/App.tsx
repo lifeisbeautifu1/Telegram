@@ -14,7 +14,7 @@ import {
 import { Home, Login, Register, Messanger } from './pages';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { ServerToClientEvents, ClientToServerEvents } from './interfaces';
-import { init } from './features/auth/auth';
+import { init, updateOnline } from './features/auth/auth';
 import { toggleRefetch } from './features/chat/chat';
 import { setOnlineUsers } from './features/users/users';
 
@@ -26,6 +26,16 @@ const App = () => {
 
   useEffect(() => {
     dispatch(init());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const update = () => {
+      dispatch(updateOnline(new Date().getTime()));
+    };
+
+    window.addEventListener('beforeunload', update);
+
+    return () => window.removeEventListener('beforeunload', update);
   }, [dispatch]);
 
   const { user } = useAppSelector((state) => state.auth);

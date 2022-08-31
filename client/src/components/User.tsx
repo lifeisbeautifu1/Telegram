@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Socket } from 'socket.io-client';
+import { formatDistanceToNow } from 'date-fns';
 
 import { ServerToClientEvents, ClientToServerEvents } from '../interfaces';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
@@ -73,8 +74,15 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
         <p className={'text-xs w-full'}>
           {onlineUsers.map((user) => user.id).includes(user.id) ? (
             <span className="text-sky-400">Online</span>
+          ) : user?.last_online ? (
+            <span className="text-gray-400">
+              last seen{' '}
+              {formatDistanceToNow(Number(user?.last_online), {
+                addSuffix: true,
+              })}
+            </span>
           ) : (
-            <span className="text-gray-400">last seen 38 minutes ago</span>
+            <span className="text-gray-400">last seen 5 minutes ago</span>
           )}
         </p>
       </div>

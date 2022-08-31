@@ -7,7 +7,7 @@ import {
   resetErrors,
   updateUsername,
   logout,
-  updateImage,
+  updateAvatar,
 } from '../features/auth/auth';
 import { setIsEditProfile, toggleDarkMode } from '../features/app/app';
 
@@ -48,7 +48,7 @@ const Settings = () => {
         });
         const url = imageData.secure_url;
         try {
-          dispatch(updateImage(url));
+          dispatch(updateAvatar(url));
         } catch (error) {
           console.log(error);
         }

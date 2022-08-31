@@ -3,6 +3,7 @@ export interface IUser {
   username: string;
   email: string;
   image_url: string;
+  last_online?: number;
 }
 
 export interface IErrors {

@@ -13,7 +13,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
   const user = (
     await query(
-      'SELECT id, username, email, image_url FROM users WHERE username = $1 LIMIT 1;',
+      'SELECT id, username, email, image_url, last_online FROM users WHERE username = $1 LIMIT 1;',
       [username]
     )
   ).rows[0];

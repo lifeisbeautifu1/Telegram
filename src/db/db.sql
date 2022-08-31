@@ -4,6 +4,7 @@ CREATE TABLE users (
 	email VARCHAR(50) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
 	image_url VARCHAR(255) DEFAULT '',
+	last_online BIGINT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -14,7 +15,7 @@ CREATE table chats (
 	is_group_chat BOOLEAN DEFAULT false,
 	latest_message UUID,
 	group_admin UUID,
-	image_url text DEFAULT '',
+	image_url VARCHAR(255) DEFAULT '',
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	FOREIGN KEY (group_admin) REFERENCES users(id)

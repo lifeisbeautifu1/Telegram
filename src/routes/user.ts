@@ -1,13 +1,20 @@
 import { Router } from 'express';
 
-import { search, updateUsername, updateImage } from '../controllers/user';
+import {
+  search,
+  updateUsername,
+  updateImage,
+  updateOnline,
+} from '../controllers/user';
 
 const router = Router();
 
 router.get('/', search);
 
-router.post('/username', updateUsername);
+router.patch('/username', updateUsername);
 
-router.post('/image', updateImage);
+router.patch('/image', updateImage);
+
+router.patch('/online', updateOnline);
 
 export default router;

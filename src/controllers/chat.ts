@@ -38,7 +38,7 @@ export const accessChat = async (req: Request, res: Response) => {
         ).rows[0];
         const sender = (
           await query(
-            'SELECT id, username, image_url FROM users WHERE id = $1;',
+            'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
             [message.sender]
           )
         ).rows[0];
@@ -60,7 +60,7 @@ export const accessChat = async (req: Request, res: Response) => {
   }
   const users = (
     await query(
-      'SELECT id, username, image_url FROM users WHERE id IN ($1, $2);',
+      'SELECT id, username, image_url, last_online FROM users WHERE id IN ($1, $2);',
       [res.locals.user.id, userId]
     )
   ).rows;
@@ -78,7 +78,7 @@ export const fetchChats = async (req: Request, res: Response) => {
   for (const chat of chats) {
     const users = (
       await query(
-        'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+        'SELECT id, username, image_url, last_online FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
         [chat.id]
       )
     ).rows;
@@ -86,7 +86,7 @@ export const fetchChats = async (req: Request, res: Response) => {
     if (chat.group_admin) {
       const groupAdmin = (
         await query(
-          'SELECT id, username, image_url FROM users WHERE id = $1;',
+          'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
           [chat.group_admin]
         )
       ).rows[0];
@@ -100,7 +100,7 @@ export const fetchChats = async (req: Request, res: Response) => {
       ).rows[0];
       const sender = (
         await query(
-          'SELECT id, username, image_url FROM users WHERE id = $1;',
+          'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
           [message.sender]
         )
       ).rows[0];
@@ -143,9 +143,10 @@ export const createGroupChat = async (req: Request, res: Response) => {
       user,
     ]);
     const fullUser = (
-      await query('SELECT id, username, image_url FROM users WHERE id = $1;', [
-        user,
-      ])
+      await query(
+        'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
+        [user]
+      )
     ).rows[0];
     groupUsers.push(fullUser);
   }
@@ -174,14 +175,15 @@ export const removeFromGroupChat = async (req: Request, res: Response) => {
       )
     ).rows[0];
     const groupAdmin = (
-      await query('SELECT id, username, image_url FROM users WHERE id = $1;', [
-        chat.group_admin,
-      ])
+      await query(
+        'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
+        [chat.group_admin]
+      )
     ).rows[0];
     chat.group_admin = groupAdmin;
     const users = (
       await query(
-        'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+        'SELECT id, username, image_url, last_online FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
         [chat.id]
       )
     ).rows;
@@ -221,16 +223,17 @@ export const addToGroupChat = async (req: Request, res: Response) => {
   ).rows[0];
 
   const groupAdmin = (
-    await query('SELECT id, username, image_url FROM users WHERE id = $1;', [
-      chat.group_admin,
-    ])
+    await query(
+      'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
+      [chat.group_admin]
+    )
   ).rows[0];
 
   chat.group_admin = groupAdmin;
 
   const users = (
     await query(
-      'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+      'SELECT id, username, image_url, last_online FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
       [chat.id]
     )
   ).rows;
@@ -252,16 +255,17 @@ export const renameGroupChat = async (req: Request, res: Response) => {
     throw new NotFoundError(`Chat with id ${chatId} not found!`);
   } else {
     const groupAdmin = (
-      await query('SELECT id, username, image_url FROM users WHERE id = $1;', [
-        chat.group_admin,
-      ])
+      await query(
+        'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
+        [chat.group_admin]
+      )
     ).rows[0];
 
     chat.group_admin = groupAdmin;
 
     const users = (
       await query(
-        'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+        'SELECT id, username, image_url, last_online FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
         [chat.id]
       )
     ).rows;
@@ -269,8 +273,6 @@ export const renameGroupChat = async (req: Request, res: Response) => {
     res.status(StatusCodes.OK).json(chat);
   }
 };
-
-
 
 export const updateGroupChatImage = async (req: Request, res: Response) => {
   const { image_url } = req.body;
@@ -294,7 +296,7 @@ export const updateGroupChatImage = async (req: Request, res: Response) => {
       ).rows[0];
       const sender = (
         await query(
-          'SELECT id, username, image_url FROM users WHERE id = $1;',
+          'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
           [message.sender]
         )
       ).rows[0];
@@ -302,16 +304,17 @@ export const updateGroupChatImage = async (req: Request, res: Response) => {
       chat.latest_message = message;
     }
     const groupAdmin = (
-      await query('SELECT id, username, image_url FROM users WHERE id = $1;', [
-        chat.group_admin,
-      ])
+      await query(
+        'SELECT id, username, image_url, last_online FROM users WHERE id = $1;',
+        [chat.group_admin]
+      )
     ).rows[0];
 
     chat.group_admin = groupAdmin;
 
     const users = (
       await query(
-        'SELECT id, username, image_url FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
+        'SELECT id, username, image_url, last_online FROM users INNER JOIN (SELECT * FROM chat_user WHERE chat_id = $1) chat_user ON users.id = chat_user.user_id;',
         [chat.id]
       )
     ).rows;

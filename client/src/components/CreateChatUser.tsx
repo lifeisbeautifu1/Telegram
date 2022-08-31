@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from 'date-fns';
+
 import { IUser } from '../interfaces';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Avatar } from './';
@@ -60,9 +62,16 @@ const CreateChatUser: React.FC<CreateChatUserProps> = ({
           <p className={'text-xs w-full'}>
             {onlineUsers.map((user) => user?.id).includes(user?.id) ? (
               <span className="text-sky-400">Online</span>
+            ) : user?.last_online ? (
+              <span className="text-gray-400 dark:text-gray-300">
+                last seen{' '}
+                {formatDistanceToNow(Number(user?.last_online), {
+                  addSuffix: true,
+                })}
+              </span>
             ) : (
               <span className="text-gray-400 dark:text-gray-300">
-                last seen 38 minutes ago
+                last seen 5 minutes ago
               </span>
             )}
           </p>
