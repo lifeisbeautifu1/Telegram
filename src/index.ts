@@ -7,10 +7,10 @@ import 'colors';
 
 import { Server } from 'socket.io';
 
-import cors from 'cors';
+// import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 // import rateLimiter from 'express-rate-limit';
 
 import errorHandler from './middleware/error';
@@ -30,34 +30,14 @@ const app = express();
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(helmet());
+// app.use(helmet());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: 'http://localhost:5000',
-    credentials: true,
-  })
-);
-
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Methods',
-    'POST, GET, OPTIONS, DELETE, PUT, PATCH'
-  );
-  res.header(
-    'Content-Security-Policy',
-    'default-src *; connect-src *; script-src *; object-src *;'
-  );
-  res.header(
-    'X-Content-Security-Policy',
-    'default-src *; connect-src *; script-src *; object-src *'
-  );
-  res.header(
-    'X-Webkit-CSP',
-    "default-src *; connect-src *; script-src 'unsafe-inline' 'unsafe-eval' *; object-src *;"
-  );
-});
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5000',
+//     credentials: true,
+//   })
+// );
 
 
 if ((process.env.NODE_ENV as string) === 'production') {

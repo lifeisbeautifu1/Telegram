@@ -9,10 +9,10 @@ require("express-async-errors");
 require("dotenv/config");
 require("colors");
 const socket_io_1 = require("socket.io");
-const cors_1 = __importDefault(require("cors"));
+// import cors from 'cors';
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
-const helmet_1 = __importDefault(require("helmet"));
+// import helmet from 'helmet';
 // import rateLimiter from 'express-rate-limit';
 const error_1 = __importDefault(require("./middleware/error"));
 const auth_1 = __importDefault(require("./middleware/auth"));
@@ -27,19 +27,14 @@ const app = (0, express_1.default)();
 app.set('trust proxy', 1);
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
-app.use((0, helmet_1.default)());
+// app.use(helmet());
 app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)({
-    origin: 'http://localhost:5000',
-    credentials: true,
-}));
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT, PATCH');
-    res.header('Content-Security-Policy', 'default-src *; connect-src *; script-src *; object-src *;');
-    res.header('X-Content-Security-Policy', 'default-src *; connect-src *; script-src *; object-src *');
-    res.header('X-Webkit-CSP', "default-src *; connect-src *; script-src 'unsafe-inline' 'unsafe-eval' *; object-src *;");
-});
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5000',
+//     credentials: true,
+//   })
+// );
 if (process.env.NODE_ENV === 'production') {
     app.use(express_1.default.static(path_1.default.join(__dirname, '../client/build')));
 }
