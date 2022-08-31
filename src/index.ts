@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import path from 'path';
 
 import 'express-async-errors';
@@ -38,7 +38,6 @@ app.use(cookieParser());
 //     credentials: true,
 //   })
 // );
-
 
 if ((process.env.NODE_ENV as string) === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
