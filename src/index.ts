@@ -1,4 +1,5 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import path from 'path';
 
 import 'express-async-errors';
 import 'dotenv/config';
@@ -26,41 +27,31 @@ import { users, addUser, getUser, removeUser } from './utils/users';
 
 const app = express();
 
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, POST, DELETE');
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   );
-//   next();
-// });
-
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cookieParser());
-// app.use(
-//   rateLimiter({
-//     windowMs: 15 * 60 * 1000, // 15 minutes
-//     max: 100, // limit each IP to 100 requests per windowMs
-//   })
-// );
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:5000',
     credentials: true,
   })
 );
 
-
+if ((process.env.NODE_ENV as string) === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
 app.use('/api/auth', authRouter);
 app.use('/api/chat', auth, chatRouter);
 app.use('/api/user', auth, userRouter);
 app.use('/api/message', auth, messageRouter);
 app.use('/api/upload', auth, uploadRouter);
+
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 app.use(errorHandler);
 app.use(notFound);

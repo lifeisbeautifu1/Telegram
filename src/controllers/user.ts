@@ -42,8 +42,8 @@ export const updateUsername = async (req: Request, res: Response) => {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       maxAge: 1000 * 3600 * 24 * 7,
-      sameSite: 'strict',
-      // sameSite: 'none',
+      // sameSite: 'strict',
+      sameSite: 'none',
       path: '/',
     });
     return res.status(StatusCodes.OK).json(updatedUser);

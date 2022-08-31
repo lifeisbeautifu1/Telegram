@@ -18,7 +18,7 @@ import { init, updateOnline } from './features/auth/auth';
 import { toggleRefetch } from './features/chat/chat';
 import { setOnlineUsers } from './features/users/users';
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = '/api';
 axios.defaults.withCredentials = true;
 
 const App = () => {
