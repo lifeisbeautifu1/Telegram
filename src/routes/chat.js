@@ -1,8 +1,8 @@
 "use strict";
-exports.__esModule = true;
-var express_1 = require("express");
-var router = (0, express_1.Router)();
-var chat_1 = require("../controllers/chat");
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const chat_1 = require("../controllers/chat");
 router.get('/', chat_1.fetchChats);
 router.post('/', chat_1.accessChat);
 router.post('/group', chat_1.createGroupChat);
@@ -10,4 +10,4 @@ router.patch('/rename', chat_1.renameGroupChat);
 router.patch('/group/remove', chat_1.removeFromGroupChat);
 router.patch('/group/add', chat_1.addToGroupChat);
 router.patch('/group/image/:id', chat_1.updateGroupChatImage);
-exports["default"] = router;
+exports.default = router;

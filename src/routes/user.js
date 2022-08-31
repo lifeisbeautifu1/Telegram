@@ -1,10 +1,10 @@
 "use strict";
-exports.__esModule = true;
-var express_1 = require("express");
-var user_1 = require("../controllers/user");
-var router = (0, express_1.Router)();
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_1 = require("../controllers/user");
+const router = (0, express_1.Router)();
 router.get('/', user_1.search);
 router.patch('/username', user_1.updateUsername);
 router.patch('/image', user_1.updateImage);
 router.patch('/online', user_1.updateOnline);
-exports["default"] = router;
+exports.default = router;
