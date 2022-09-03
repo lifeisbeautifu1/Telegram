@@ -19,3 +19,7 @@ Telegram Clone FullStack Applciation build with PERN
 ### Screenshots
 
 ![alt text](https://imgur.com/OOju48F.png "App Photo")
+![alt text](https://imgur.com/nibAr9K.png "App Photo")
+![alt text](https://imgur.com/VuAyCJh.png "App Photo")
+![alt text](https://imgur.com/jzVRtnj.png "App Photo")
+![alt text](https://imgur.com/t4tLIgX.png "App Photo")
