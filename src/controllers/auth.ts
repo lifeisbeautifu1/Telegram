@@ -16,7 +16,7 @@ export const login = async (req: Request, res: Response) => {
 
   const user = (
     await query(
-      'SELECT id, username, password, email, image_url FROM users WHERE username = $1 LIMIT 1;',
+      'SELECT id, username, password, email, image_url, last_online FROM users WHERE username = $1 LIMIT 1;',
       [username]
     )
   ).rows[0];
@@ -51,6 +51,7 @@ export const login = async (req: Request, res: Response) => {
     username: user.username,
     email: user.email,
     image_url: user.image_url,
+    last_online: user.last_online,
   });
 };
 

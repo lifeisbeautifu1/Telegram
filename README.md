@@ -8,7 +8,8 @@ Telegram Clone FullStack Applciation build with PERN
 1. Frontend: React, Typescript, Tailwind, ReduxToolkit.
 2. Backend: Node.js, Typescript, Postgresql.
 
-### Features
+
+## Features
 
 1. JWT cookies auth.
 2. Realtime chat with other people.
