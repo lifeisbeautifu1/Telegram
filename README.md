@@ -1,7 +1,7 @@
 # Telegram
 
 Telegram Clone FullStack Applciation build with PERN
-[Live demo](https://project-telegram-clone.herokuapp.com/)
+[Live demo(loads slow)](https://project-telegram-clone.herokuapp.com/)
 
 ## Stack
 
