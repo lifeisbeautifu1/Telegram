@@ -18,7 +18,7 @@ module.exports = {
       },
       fontFamily: {
         primary: 'Roboto',
-        secondary: 'Lucida Grande',
+        secondary: 'Lucida Grande, Arial',
       },
     },
   },
