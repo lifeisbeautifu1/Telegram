@@ -6,7 +6,7 @@ Telegram Clone FullStack Applciation build with PERN
 ## Stack
 
 1. Frontend: React, Tailwind CSS, ReduxToolkit.
-2. Backend: Node.js REST API, Postgresql.
+2. Backend: Node.js REST API, PostgreSQL.
 
 ## Features
 
