@@ -1,13 +1,12 @@
 # Telegram
 
 Telegram Clone FullStack Applciation build with PERN
-[Live demo(loads slow)](https://project-telegram-clone.herokuapp.com/)
+[Live website](https://https://telegram-clone.up.railway.app/)
 
 ## Stack
 
 1. Frontend: React, Tailwind CSS, ReduxToolkit.
-2. Backend: Node.js RESTful API, Postgresql.
-
+2. Backend: Node.js REST API, Postgresql.
 
 ## Features
 
@@ -18,8 +17,8 @@ Telegram Clone FullStack Applciation build with PERN
 
 ### Screenshots
 
-![alt text](https://imgur.com/OOju48F.png "App Photo")
-![alt text](https://imgur.com/nibAr9K.png "App Photo")
-![alt text](https://imgur.com/VuAyCJh.png "App Photo")
-![alt text](https://imgur.com/jzVRtnj.png "App Photo")
-![alt text](https://imgur.com/t4tLIgX.png "App Photo")
+![alt text](https://imgur.com/OOju48F.png 'App Photo')
+![alt text](https://imgur.com/nibAr9K.png 'App Photo')
+![alt text](https://imgur.com/VuAyCJh.png 'App Photo')
+![alt text](https://imgur.com/jzVRtnj.png 'App Photo')
+![alt text](https://imgur.com/t4tLIgX.png 'App Photo')
