@@ -1,7 +1,7 @@
 # Telegram
 
 Telegram Clone FullStack Applciation build with PERN
-[Live website](https://https://telegram-clone.up.railway.app/)
+[Live website](https://telegram-clone.up.railway.app/)
 
 ## Stack
 
