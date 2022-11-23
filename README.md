@@ -1,19 +1,19 @@
 # Telegram
 
-Telegram Clone FullStack Applciation build with PERN
+Telegram Clone build with PERN Stack
 [Live website](https://telegram-clone.up.railway.app/)
 
 ## Stack
 
-1. Frontend: React, Tailwind CSS, ReduxToolkit.
-2. Backend: Node.js REST API, PostgreSQL.
+1. Frontend: React, Tailwind CSS, Redux Toolkit.
+2. Backend: Node.js, Express, PostgreSQL.
 
 ## Features
 
 1. JWT cookies auth.
 2. Realtime chat with other people.
-3. Search users, start conversation, edit profile info, upload image, toggle dark mode.
-4. Create group chats, add people, remove them, rename group chat and upload image.
+3. Search users, start conversations, edit user profile, upload avatar, toggle dark mode.
+4. Create group chats, add people, remove them, rename group chat and upload image for group chat.
 
 ### Screenshots
 
