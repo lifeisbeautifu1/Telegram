@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.cdnfonts.com/css/lucida-grande');
 
 .navbar ul li a:after,
 .navbar ul li button:after,
@@ -406,7 +407,7 @@ span.ripple {
 .tooltip::before {
   content: '';
   width: 0;
-    height: 0;
+  height: 0;
   position: absolute;
   top: -5px;
   left: 50%;
@@ -449,14 +450,14 @@ span.ripple {
   background: rgb(56, 189, 248);
 }
 
-#switch:checked+#forSwitch:after {
+#switch:checked + #forSwitch:after {
   left: calc(100% - 5px);
   transform: translateX(-100%);
 }
 
 .img {
-  filter: brightness(0) invert(1)
+  filter: brightness(0) invert(1);
 }
 .w-custom {
-  width: calc(100% - 44px)
+  width: calc(100% - 44px);
 }
