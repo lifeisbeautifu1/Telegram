@@ -68,11 +68,11 @@ const App = () => {
   return (
     <div className={isDarkMode ? 'dark' : ''}>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route
-          path="/messanger"
+          path='/messanger'
           element={
             <ProtectedRoute>
               <MessangerLayout />
@@ -81,7 +81,7 @@ const App = () => {
         >
           <Route index element={<Messanger socket={socket} />} />
           <Route
-            path="/messanger/contacts"
+            path='/messanger/contacts'
             element={
               <>
                 <SidebarContacts socket={socket} />
@@ -90,7 +90,7 @@ const App = () => {
             }
           />
           <Route
-            path="/messanger/settings"
+            path='/messanger/settings'
             element={
               <>
                 <SidebarSettings />

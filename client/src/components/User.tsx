@@ -68,7 +68,7 @@ const User: React.FC<UserProps> = ({ user, socket, contacts }) => {
         )}
       </div>
       <div className="overflow-hidden w-full py-[2px] flex flex-col justify-center">
-        <h1 className="text-xs capitalize font-medium flex  justify-between items-center dark:text-white">
+        <h1 className="text-xs capitalize font-medium flex justify-between items-center dark:text-white">
           {user.username}{' '}
         </h1>
         <p className={'text-xs w-full'}>
