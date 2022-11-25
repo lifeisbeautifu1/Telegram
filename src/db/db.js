@@ -1,5 +1,7 @@
-import { Pool } from 'pg';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.query = void 0;
+const pg_1 = require("pg");
 // const devConfig = {
 //   user: process.env.PG_USER!,
 //   password: process.env.PG_PASSWORD!,
@@ -7,17 +9,13 @@ import { Pool } from 'pg';
 //   database: process.env.PG_DATABASE!,
 //   port: +process.env.PG_PORT!,
 // };
-
 const devConfig = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
-
 const proConfig = process.env.DATABASE_URL;
-
-const pool = new Pool({
-  connectionString:
-    process.env.NODE_ENV === 'production' ? proConfig : devConfig,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+const pool = new pg_1.Pool({
+    connectionString: process.env.NODE_ENV === 'production' ? proConfig : devConfig,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
-
-export const query = (text: string, vars: any[]) => pool.query(text, vars);
+const query = (text, vars) => pool.query(text, vars);
+exports.query = query;
