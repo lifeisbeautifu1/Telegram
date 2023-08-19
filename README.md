@@ -1,7 +1,6 @@
 # Telegram
 
 Telegram Clone build with PERN Stack
-[Live website](https://telegram-clone.up.railway.app/)
 
 ## Stack
 
